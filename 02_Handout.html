@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handout · Daten zum Sprechen bringen</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0f172a;--soft:#334155;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5;--accent-soft:#eef2ff;--accent-ink:#3730a3;--warn:#d97706;--warn-soft:#fff7ed;--good:#059669;--good-soft:#ecfdf5}
+body{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;background:#e2e8f0;color:var(--soft);line-height:1.45;padding:24px}
+.page{max-width:820px;margin:0 auto 24px;background:#fff;border-radius:10px;box-shadow:0 10px 30px -12px rgba(15,23,42,.25);overflow:hidden}
+.head{background:linear-gradient(120deg,#4f46e5,#6366f1);color:#fff;padding:24px 32px}
+.head .kick{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:700}
+.head h1{font-size:24px;margin-top:5px;letter-spacing:-.01em}
+.head .sub{margin-top:6px;opacity:.92;font-size:14px}
+.body{padding:22px 32px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px 26px}
+h2{color:var(--ink);font-size:16px;margin:16px 0 7px;padding-bottom:4px;border-bottom:2px solid var(--accent-soft)}
+.cols h2:first-child,.body>h2:first-child{margin-top:0}
+p,li{font-size:13.3px;color:var(--soft)}
+ul{margin:4px 0 4px 18px}li{margin:3px 0}
+strong{color:var(--ink)}
+.mono{font-family:Consolas,ui-monospace,monospace;color:var(--accent-ink);font-weight:600}
+table{width:100%;border-collapse:collapse;margin:6px 0;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent-ink)}
+.eck{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.eck span{font-size:12px;background:#f1f5f9;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:600;color:var(--ink)}
+.eck b{color:var(--accent-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.chip{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid #c7d2fe}
+.box{border:1px solid var(--line);border-radius:8px;padding:11px 13px;margin:7px 0;background:#f8fafc;font-size:13px}
+.box.accent{background:var(--accent-soft);border-color:#c7d2fe}
+.star{display:inline-block;background:var(--accent);color:#fff;font-size:10.5px;font-weight:800;border-radius:5px;padding:1px 6px;letter-spacing:.04em}
+.ph{background:var(--warn-soft);border-bottom:2px dotted var(--warn);padding:0 3px;border-radius:3px;color:#7c2d12;font-weight:600}
+.foot{padding:12px 32px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.printbtn{position:fixed;top:16px;right:16px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 15px;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px -6px rgba(79,70,229,.6);z-index:50}
+.printbtn:hover{background:#4338ca}
+@media print{body{background:#fff;padding:0}.page{box-shadow:none;border-radius:0;max-width:none;margin:0}.printbtn{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:12mm}}
+</style>
+</head>
+<body>
+<button class="printbtn" onclick="window.print()">🖨 Drucken / als PDF</button>
+<div class="page">
+  <div class="head">
+    <div class="kick">Handout zur Abschlusspräsentation Informatik</div>
+    <h1>Daten zum Sprechen bringen</h1>
+    <div class="sub">Tabellenkalkulation (Excel) am Umfrageprojekt „Mediennutzung“ · <span class="ph">[Name]</span> · Geschwister-Scholl-Gymnasium Berenbostel</div>
+  </div>
+  <div class="body">
+
+    <div class="eck">
+      <span><b>Schulform</b> · Gymnasium</span>
+      <span><b>Jahrgang</b> · 10</span>
+      <span><b>Lerngruppe</b> · 28 Schülerinnen und Schüler</span>
+      <span><b>Umfang</b> · 5–6 Doppelstd.</span>
+      <span><b>Software</b> · MS Excel 365</span>
+      <span><b>Räume</b> · 2 × 30 PCs (Win)</span>
+    </div>
+
+    <div class="box accent"><strong>Idee der Reihe:</strong> Die Klasse erhebt per selbst entwickeltem Fragebogen echte Daten zur eigenen Mediennutzung, wertet sie in Excel aus (Kennwerte + Diagramme) und präsentiert die Ergebnisse. Excel wird so nicht als Selbstzweck, sondern als Werkzeug zur Lösung eines lebensweltlichen Problems erlernt.</div>
+
+    <div class="cols">
+      <div>
+        <h2>Phasen der Reihe</h2>
+        <table>
+          <tr><th style="width:42px">Phase</th><th>Inhalt</th></tr>
+          <tr><td>0</td><td>Excel-Grundlagen (Zelllogik, Bezüge, Formeln, Diagramme)</td></tr>
+          <tr><td>1</td><td>Fragebogen entwickeln</td></tr>
+          <tr><td>2–3</td><td>Umfrage (Papier) durchführen &amp; auszählen</td></tr>
+          <tr><td>4–6 <span class="star">★ Fokus</span></td><td>Daten einpflegen, bereinigen, Kennwerte, Visualisierung</td></tr>
+          <tr><td>7</td><td>Präsentieren (Export → PowerPoint)</td></tr>
+        </table>
+
+        <h2>Schwerpunkt</h2>
+        <p>Von <strong>echten, selbst erhobenen Daten</strong> zur belastbaren Aussage: Eingeben → Bereinigen → Berechnen (Mittelwert, Spannweite, Standardabweichung) → Visualisieren (nach Standards) → Präsentieren.</p>
+      </div>
+      <div>
+        <h2>Bezug zum Kerncurriculum</h2>
+        <p>Lernfeld <strong>„Daten und ihre Spuren“</strong> → Modul <strong>„Verwaltung von Daten“</strong> (Basis): Tabellen mit Tabellenkalkulation erstellen, Informationen gewinnen, Diagramme darstellen.</p>
+        <div class="chips"><span class="chip">P1.3</span><span class="chip">P3.2</span><span class="chip">P4.2</span><span class="chip">P5.1</span><span class="chip">I1.3</span><span class="chip">I1.1</span><span class="chip">I1.4</span></div>
+        <p style="margin-top:6px">Ergänzend Modul <strong>„Präsentation“</strong> (Computerkompetenz) + Bezug zu <strong>I4.1</strong> (Mediennutzung reflektieren).</p>
+
+        <h2>Bewertung</h2>
+        <p>Schulgewichtung <strong>30 % schriftlich / 70 % mündlich-fachpraktisch</strong> – das Projekt zählt im 70 %-Anteil.</p>
+        <p style="margin-top:4px">Projektnote (Vorschlag): Produkt 40 % · Prozess 25 % · Präsentation 25 % · Reflexion 10 %.</p>
+      </div>
+    </div>
+
+    <h2>Stolpersteine &amp; Lösungen</h2>
+    <table>
+      <tr><th style="width:24%">Problem</th><th>Gegenmaßnahme</th></tr>
+      <tr><td>Zellbezüge (relativ/absolut)</td><td>früh <span class="mono">$</span>-Bezüge zeigen, Mini-Übung, „Formeln anzeigen“ (<span class="mono">Strg+#</span>)</td></tr>
+      <tr><td>Datenqualität (Komma/Punkt, Text-Zahl, leere Werte)</td><td>gemeinsame Eingaberegeln, Datenüberprüfung/Dropdowns, Stichprobenkontrolle</td></tr>
+      <tr><td>Diagramme (Typ, Beschriftung)</td><td>Standard-Checkliste, Vorlage, Peer-Feedback</td></tr>
+      <tr><td>Technik &amp; Tempo</td><td>klare Datei-/Namensregeln, Hilfekarten, Tandems, Zusatzaufgaben</td></tr>
+    </table>
+
+    <h2>Material (Ideensammlung)</h2>
+    <p>Arbeitsblatt Excel-Grundlagen · Arbeitsblatt &amp; Vorlage Fragebogen · Anleitung Auswertung/Visualisierung · Bewertungsraster — alle im Ordner <span class="mono">Material/</span>, druck- und teilbar.</p>
+  </div>
+  <div class="foot"><span>Abschlusspräsentation · Weiterbildung Informatik</span><span><span class="ph">[Name · Kontakt]</span> · Juni 2026</span></div>
+</div>
+</body>
+</html>

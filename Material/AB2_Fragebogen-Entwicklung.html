@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeitsblatt 2 · Fragebogen entwickeln</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0f172a;--soft:#334155;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5;--accent-soft:#eef2ff;--accent-ink:#3730a3;--warn:#d97706;--warn-soft:#fff7ed;--good:#059669;--good-soft:#ecfdf5;--bad:#dc2626;--bad-soft:#fef2f2}
+body{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;background:#e2e8f0;color:var(--soft);line-height:1.5;padding:24px}
+.page{max-width:820px;margin:0 auto 24px;background:#fff;border-radius:10px;box-shadow:0 10px 30px -12px rgba(15,23,42,.25);overflow:hidden}
+.head{background:linear-gradient(120deg,#4f46e5,#6366f1);color:#fff;padding:22px 32px}
+.head .kick{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:700}
+.head h1{font-size:23px;margin-top:5px}
+.fieldrow{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-size:13px}
+.fieldrow .l{border-bottom:1.5px solid rgba(255,255,255,.6);min-width:150px;display:inline-block}
+.body{padding:22px 32px}
+h2{color:var(--ink);font-size:17px;margin:20px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--accent-soft)}
+p,li,td{font-size:14px;color:var(--soft)}
+ul,ol{margin:6px 0 6px 22px}li{margin:4px 0}
+strong{color:var(--ink)}
+.mono{font-family:Consolas,ui-monospace,monospace;color:var(--accent-ink);font-weight:600;background:#f8fafc;padding:1px 5px;border-radius:4px;border:1px solid var(--line)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{border:1px solid var(--line);border-radius:8px;padding:13px 15px;background:#f8fafc}
+.card h3{font-size:14.5px;color:var(--accent-ink);margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13.3px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent-ink)}
+.good{color:var(--good);font-weight:800}.bad{color:var(--bad);font-weight:800}
+.box{border:1px solid var(--line);border-radius:8px;padding:12px 15px;margin:9px 0;background:#f8fafc}
+.box.tip{background:var(--good-soft);border-color:#a7f3d0}.box.tip b{color:#065f46}
+.task{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:11px 14px;margin:10px 0}
+.task .h{font-weight:800;color:var(--accent-ink);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.ans{border-bottom:1px solid #94a3b8;display:block;width:100%;height:1.2em;margin:10px 0}
+.chk{display:inline-block;width:14px;height:14px;border:1.5px solid #94a3b8;border-radius:3px;vertical-align:-2px;margin-right:7px}
+.foot{padding:13px 32px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.printbtn{position:fixed;top:16px;right:16px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 15px;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px -6px rgba(79,70,229,.6);z-index:50}
+.printbtn:hover{background:#4338ca}
+@media print{body{background:#fff;padding:0}.page{box-shadow:none;border-radius:0;max-width:none;margin:0}.printbtn{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:13mm}.task,.box,.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<button class="printbtn" onclick="window.print()">🖨 Drucken / als PDF</button>
+<div class="page">
+  <div class="head">
+    <div class="kick">Umfrageprojekt Mediennutzung · Arbeitsblatt 2</div>
+    <h1>Einen Fragebogen entwickeln</h1>
+    <div class="fieldrow"><span>Gruppe: <span class="l"></span></span><span>Namen: <span class="l" style="min-width:220px"></span></span></div>
+  </div>
+  <div class="body">
+
+    <div class="box"><strong>Ziel:</strong> In der Gruppe entwickelt ihr einen kurzen Fragebogen zur Mediennutzung, dessen Antworten sich später <strong>gut in Excel auswerten</strong> lassen. Die wichtigste Regel: <em>Schon beim Fragenstellen an die Auswertung denken!</em></p></div>
+
+    <h2>Offene vs. geschlossene Fragen</h2>
+    <div class="two">
+      <div class="card"><h3>Geschlossene Fragen</h3><p>Vorgegebene Antworten (Ankreuzen, Zahl, Skala). <span class="good">Leicht auswertbar</span> – ideal für Excel.</p><p style="margin-top:6px"><span class="mono">Wie viele Minuten …? ____</span></p></div>
+      <div class="card"><h3>Offene Fragen</h3><p>Freitext. Liefern Ideen, sind aber <span class="bad">schwer in Zahlen zu fassen</span>. Sparsam einsetzen.</p><p style="margin-top:6px"><span class="mono">Was stört dich an …?</span></p></div>
+    </div>
+
+    <h2>Gut formulieren – drei Regeln</h2>
+    <table>
+      <tr><th>Regel</th><th><span class="bad">✗ statt</span></th><th><span class="good">✓ besser</span></th></tr>
+      <tr><td><strong>eindeutig</strong></td><td>„Nutzt du oft dein Handy?“</td><td>„Wie viele Minuten gestern? ___“</td></tr>
+      <tr><td><strong>auswertbar</strong> (Einheit!)</td><td>„Viel oder wenig?“</td><td>„0–30 / 31–60 / 61–120 / &gt;120 min“</td></tr>
+      <tr><td><strong>neutral</strong></td><td>„Findest du nicht auch, dass …?“</td><td>„Wie schätzt du … ein?“</td></tr>
+    </table>
+    <div class="box tip"><b>Skala-Tipp:</b> Für Meinungen eignet sich eine 5er-Skala (1 = stimme gar nicht zu … 5 = stimme voll zu). In Excel rechnest du damit später Mittelwerte.</div>
+
+    <h2>Euer Auftrag</h2>
+    <div class="task"><div class="h">Aufgabe</div>
+      <p>Entwickelt <strong>6–8 Fragen</strong> zur Mediennutzung. Bedingungen:</p>
+      <ul>
+        <li>mindestens <strong>5 geschlossene</strong> Fragen (Zahl, Auswahl oder Skala),</li>
+        <li>bei Zeitangaben immer dieselbe <strong>Einheit</strong> festlegen (z. B. Minuten/Tag),</li>
+        <li>höchstens 1–2 offene Fragen.</li>
+      </ul>
+      <p style="margin-top:8px">Notiert eure Fragen hier (Reinschrift später am PC oder auf der Vorlage):</p>
+      <span class="ans"></span><span class="ans"></span><span class="ans"></span><span class="ans"></span><span class="ans"></span><span class="ans"></span><span class="ans"></span><span class="ans"></span>
+    </div>
+
+    <h2>Checkliste vor dem Druck</h2>
+    <p><span class="chk"></span>Jede Frage hat eine klare Einheit / klare Antwortmöglichkeiten.<br>
+       <span class="chk"></span>Keine Frage ist suggestiv formuliert.<br>
+       <span class="chk"></span>Der Fragebogen ist <strong>anonym</strong> (keine Namen).<br>
+       <span class="chk"></span>Wir wissen für jede Frage, <strong>wie</strong> wir sie in Excel auswerten.</p>
+  </div>
+  <div class="foot">Arbeitsblatt 2 von 3 · Tipp: An der fertigen <strong>Fragebogen-Vorlage</strong> könnt ihr euch orientieren.</div>
+</div>
+</body>
+</html>

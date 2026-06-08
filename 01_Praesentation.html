@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daten zum Sprechen bringen – Tabellenkalkulation am Umfrageprojekt „Mediennutzung“</title>
+<style>
+  :root{
+    --bg:#ffffff; --bg-alt:#f8fafc; --panel:#f1f5f9;
+    --ink:#0f172a; --ink-soft:#334155; --muted:#64748b; --line:#e2e8f0;
+    --accent:#4f46e5; --accent-soft:#eef2ff; --accent-ink:#3730a3;
+    --good:#059669; --good-soft:#ecfdf5; --bad:#dc2626; --bad-soft:#fef2f2; --warn:#d97706; --warn-soft:#fff7ed;
+    --chart:#4f46e5; --chart2:#0ea5e9;
+    --radius:18px; --shadow:0 10px 30px -12px rgba(15,23,42,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:#0b1020; overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* progress + chrome */
+  #bartrack{position:fixed;top:0;left:0;right:0;height:5px;background:transparent;z-index:60}
+  #bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#818cf8);transition:width .35s ease}
+  #pageno{position:fixed;bottom:16px;right:20px;font-size:14px;color:var(--muted);z-index:60;font-variant-numeric:tabular-nums}
+  #tag{position:fixed;top:16px;right:20px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;z-index:60}
+  #hint{position:fixed;bottom:14px;left:20px;font-size:12.5px;color:var(--muted);z-index:60;transition:opacity .6s ease}
+  #hint.fade{opacity:0}
+  #nav{position:fixed;bottom:12px;right:90px;z-index:60;display:flex;gap:8px}
+  #nav button{width:38px;height:38px;border:1px solid var(--line);background:#fff;border-radius:50%;cursor:pointer;font-size:17px;color:var(--ink-soft);box-shadow:var(--shadow)}
+  #nav button:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* deck */
+  .deck{position:fixed;inset:0;background:var(--bg)}
+  .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    padding:60px clamp(40px,7vw,120px);opacity:1;visibility:visible}
+  body.js .slide{opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .4s ease,transform .4s ease}
+  body.js .slide.active{opacity:1;visibility:visible;transform:none}
+  .wrap{width:100%;max-width:1120px}
+
+  .kicker{font-size:clamp(12px,1.3vw,15px);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:clamp(34px,6vw,68px);line-height:1.04;letter-spacing:-.02em;font-weight:800}
+  h2{font-size:clamp(26px,3.8vw,46px);line-height:1.08;letter-spacing:-.01em;font-weight:800}
+  .rule{width:64px;height:5px;border-radius:4px;background:var(--accent);margin:18px 0 26px}
+  p,li{font-size:clamp(16px,1.85vw,22px);line-height:1.5;color:var(--ink-soft)}
+  .lead{font-size:clamp(18px,2.3vw,27px);color:var(--ink)}
+  strong{color:var(--ink);font-weight:700}
+  .muted{color:var(--muted)}
+  ul{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:6px}
+  ul.bul li{position:relative;padding-left:30px}
+  ul.bul li::before{content:"";position:absolute;left:4px;top:.62em;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+
+  /* steps (fragments) */
+  body.js .step{opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease}
+  body.js .step.on{opacity:1;transform:none}
+
+  /* placeholder marker */
+  .ph{background:var(--warn-soft);border-bottom:2px dotted var(--warn);padding:0 3px;border-radius:3px;color:#7c2d12;font-weight:600}
+
+  /* title slide */
+  .slide.title{background:radial-gradient(120% 120% at 100% 0%,#eef2ff 0%,#ffffff 42%)}
+  .title .meta{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:15px;color:var(--ink-soft);box-shadow:var(--shadow);font-weight:600}
+  .pill b{color:var(--accent-ink)}
+  .title .author{margin-top:34px;font-size:17px;color:var(--muted)}
+
+  /* layout helpers */
+  .grid{display:grid;gap:22px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+  @media(max-width:900px){.g2,.g3,.g5,.split{grid-template-columns:1fr}}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;box-shadow:var(--shadow)}
+  .card h3{font-size:clamp(16px,1.9vw,21px);color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .card p,.card li{font-size:clamp(14px,1.55vw,18px)}
+  .card .ic{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:18px;flex:none}
+  .soft{background:var(--bg-alt)}
+  .accentcard{background:var(--accent-soft);border-color:#c7d2fe}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chip{font-size:13.5px;font-weight:700;padding:6px 11px;border-radius:8px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid #c7d2fe;font-variant-numeric:tabular-nums}
+  .chip.alt{background:var(--good-soft);color:#065f46;border-color:#a7f3d0}
+
+  /* timeline */
+  .timeline{display:flex;gap:10px;align-items:stretch;margin-top:10px}
+  .ph-step{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 12px;position:relative;text-align:center}
+  .ph-step .n{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.08em}
+  .ph-step .t{font-size:14.5px;font-weight:700;color:var(--ink);margin-top:6px;line-height:1.25}
+  .ph-step.focus{background:var(--accent);border-color:var(--accent)}
+  .ph-step.focus .n{color:#c7d2fe}
+  .ph-step.focus .t{color:#fff}
+  .focus-band{margin-top:16px;display:inline-flex;align-items:center;gap:10px;background:var(--accent-soft);border:1px solid #c7d2fe;color:var(--accent-ink);font-weight:700;padding:10px 16px;border-radius:10px;font-size:15px}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:clamp(13px,1.5vw,17px);background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+  th{background:var(--panel);color:var(--ink);font-weight:700;font-size:.92em}
+  tr:last-child td{border-bottom:none}
+  td.code,.mono{font-family:"Consolas",ui-monospace,monospace;color:var(--accent-ink);font-weight:600}
+  .res{font-weight:800;color:var(--ink)}
+
+  /* good/bad badges */
+  .ok{color:var(--good);font-weight:800}
+  .no{color:var(--bad);font-weight:800}
+  .tagline{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.06em;padding:4px 10px;border-radius:7px}
+  .tagline.good{background:var(--good-soft);color:#065f46}
+  .tagline.bad{background:var(--bad-soft);color:#991b1b}
+
+  /* charts */
+  .chartbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+  svg{display:block;width:100%;height:auto}
+
+  /* big number */
+  .stat{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+  .stat .v{font-size:clamp(22px,3vw,34px);font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .stat .l{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+  /* notes panel */
+  #notes{position:fixed;left:0;right:0;bottom:0;max-height:42vh;overflow:auto;background:#0f172a;color:#e2e8f0;
+    border-top:3px solid var(--accent);padding:18px 26px 22px;transform:translateY(101%);transition:transform .3s ease;z-index:70}
+  #notes.show{transform:translateY(0)}
+  #notes .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#818cf8;font-weight:800;margin-bottom:8px}
+  #notes .notes-body{font-size:16px;line-height:1.5}
+  #notes .notes-body strong{color:#fff}
+  .notes{display:none}
+
+  /* print / overview */
+  body.print-mode{overflow:auto;background:var(--panel)}
+  body.print-mode .deck{position:static;background:transparent}
+  body.print-mode .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;transform:none!important;
+    page-break-after:always;break-after:page;min-height:92vh;border:1px solid var(--line);background:#fff;margin:18px auto;max-width:1180px;border-radius:10px}
+  body.print-mode .step{opacity:1!important;transform:none!important}
+  body.print-mode #notes,body.print-mode #nav{display:none}
+  body.print-mode #notes.force{display:block;position:static;transform:none;max-height:none;border-radius:0 0 10px 10px}
+
+  @media print{
+    @page{size:A4 landscape;margin:10mm}
+    body{overflow:visible;background:#fff}
+    #bartrack,#pageno,#tag,#hint,#nav,#notes{display:none!important}
+    .deck{position:static}
+    .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;transform:none!important;
+      page-break-after:always;min-height:auto;padding:24px}
+    .step{opacity:1!important;transform:none!important}
+    .card,.stat,table,.chartbox{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div id="bartrack"><div id="bar"></div></div>
+<div id="tag"></div>
+<div id="pageno"></div>
+<div id="hint">→ / Leertaste weiter&nbsp;·&nbsp;← zurück&nbsp;·&nbsp;<b>S</b> Notizen&nbsp;·&nbsp;<b>F</b> Vollbild&nbsp;·&nbsp;<b>P</b> Druck/PDF</div>
+<div id="nav"><button id="prevb" aria-label="zurück">‹</button><button id="nextb" aria-label="weiter">›</button></div>
+
+<main class="deck" id="deck">
+
+  <!-- 1 TITEL -->
+  <section class="slide title" data-tag="Kolloquium">
+    <div class="wrap">
+      <p class="kicker">Informatik · Sek I · Abschlusspräsentation</p>
+      <h1>Daten zum Sprechen<br>bringen</h1>
+      <p class="lead" style="margin-top:18px;max-width:760px">Tabellenkalkulation mit Excel – erarbeitet am Umfrageprojekt <strong>„Mediennutzung in unserer Klasse“</strong></p>
+      <div class="meta">
+        <span class="pill"><b>Schulform</b> · Gymnasium</span>
+        <span class="pill"><b>Jahrgang</b> · 10</span>
+        <span class="pill"><b>Software</b> · MS Excel (Office 365)</span>
+        <span class="pill"><b>Schwerpunkt</b> · Von echten Daten zur Aussage</span>
+      </div>
+      <p class="author">Stefan Venekamp · Geschwister-Scholl-Gymnasium Berenbostel · Juni 2026 &nbsp;|&nbsp; 20 Min Vortrag + 10 Min Fragen</p>
+    </div>
+    <aside class="notes"><strong>Begrüßung.</strong> Thema vorstellen: eine durchgeführte Excel-Reihe, eingebettet in ein echtes Umfrageprojekt zur Mediennutzung. Schwerpunkt heute: der Weg von selbst erhobenen Daten zur belastbaren, visualisierten Aussage. Format: 20 Min, danach 10 Min Fragen.</aside>
+  </section>
+
+  <!-- 2 AGENDA -->
+  <section class="slide" data-tag="Überblick">
+    <div class="wrap">
+      <p class="kicker">Überblick</p>
+      <h2>Was Euch erwartet</h2>
+      <div class="rule"></div>
+      <div class="grid g2" style="gap:14px 40px">
+        <ul class="bul">
+          <li class="step"><strong>Rahmen</strong> – Schule, Ausstattung, Lerngruppe</li>
+          <li class="step"><strong>Einordnung</strong> in das Kerncurriculum Informatik</li>
+          <li class="step"><strong>Die Unterrichtsreihe</strong> im Überblick</li>
+          <li class="step"><strong>Schwerpunkt</strong> – von echten Daten zur Aussage</li>
+        </ul>
+        <ul class="bul">
+          <li class="step"><strong>Stolpersteine</strong> &amp; konkrete Lösungen</li>
+          <li class="step"><strong>Bewertung</strong> &amp; Reflexion</li>
+          <li class="step"><strong>Material</strong> zum Mitnehmen (Ideensammlung)</li>
+          <li class="step muted">… anschließend Eure Fragen</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">Roten Faden ankündigen. Betonen: Der <strong>Schwerpunkt</strong> (Daten → Berechnung → Visualisierung) bekommt den meisten Raum; alles andere rahmt ihn ein. Am Ende gibt es Material für die Gruppe.</aside>
+  </section>
+
+  <!-- 3 RAHMEN -->
+  <section class="slide" data-tag="Rahmen">
+    <div class="wrap">
+      <p class="kicker">Schulform · Ausstattung · Material · Jahrgang</p>
+      <h2>Der Rahmen</h2>
+      <div class="rule"></div>
+      <div class="grid g2">
+        <div class="card"><h3>Schule &amp; Lerngruppe</h3>
+          <ul class="bul" style="gap:8px">
+            <li><strong>Geschwister-Scholl-Gymnasium</strong> Berenbostel</li>
+            <li>Gymnasium · Sekundarbereich I</li>
+            <li>Informatik in <strong>Jahrgang 10</strong> · <strong>28</strong> Schülerinnen und Schüler</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Ausstattung</h3>
+          <ul class="bul" style="gap:8px">
+            <li><strong>2 Computerräume</strong> mit je <strong>30 Desktop-PCs</strong> (Windows)</li>
+            <li><strong>1 Gerät pro Schülerin und Schüler</strong> – Einzelarbeit am Rechner</li>
+            <li>Beamer/Smartboard, Schul-Netzlaufwerk</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Material der Schule</h3>
+          <ul class="bul" style="gap:8px">
+            <li><strong>MS Office 365</strong> (Excel + PowerPoint), schulische Lizenz</li>
+            <li>Fragebögen auf <strong>Papier</strong>, Präsentation per <strong>PowerPoint am Smartboard</strong></li>
+            <li>Gruppenordner auf dem Schul-Netzlaufwerk</li>
+          </ul>
+        </div>
+        <div class="card accentcard"><h3>Umfang</h3>
+          <ul class="bul" style="gap:8px">
+            <li><strong>5–6 Doppelstunden</strong> (≈ 10–12 Unterrichtsstunden)</li>
+            <li>Sozialform: Einzelarbeit (Excel) + <strong>Kleingruppen</strong> (Projekt)</li>
+            <li>Produkt: eigene Excel-Auswertung + Kurzpräsentation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Pflichtaspekte 1–4 – mit echten Schuldaten gefüllt: Geschwister-Scholl-Gymnasium Berenbostel, 2 Computerräume à 30 Windows-PCs, 28 Schülerinnen und Schüler in Jg. 10, 5–6 Doppelstunden. Für das Kollegium relevant: 1:1 am PC erleichtert die Excel-Arbeit enorm.</aside>
+  </section>
+
+  <!-- 4 KC -->
+  <section class="slide" data-tag="Kerncurriculum">
+    <div class="wrap">
+      <p class="kicker">Bezug zum Kerncurriculum Informatik Sek I (Niedersachsen, 2014)</p>
+      <h2>Verankerung im Curriculum</h2>
+      <div class="rule"></div>
+      <div class="grid g2">
+        <div class="card"><h3>Lernfeld „Daten und ihre Spuren“</h3>
+          <p style="margin-bottom:8px"><strong>Modul „Verwaltung von Daten“ (Basis):</strong></p>
+          <ul class="bul" style="gap:7px">
+            <li>Tabellen mit einer <strong>Tabellenkalkulation</strong> erstellen</li>
+            <li>Informationen aus Daten gewinnen (Filtern, Sortieren)</li>
+            <li>Daten als <strong>Diagramme</strong> grafisch darstellen</li>
+          </ul>
+          <div class="chips"><span class="chip">P1.3</span><span class="chip">P3.2</span><span class="chip">P4.2</span><span class="chip">P5.1</span><span class="chip">I1.3</span></div>
+        </div>
+        <div class="card"><h3>Inhaltlich: Information &amp; Darstellung</h3>
+          <ul class="bul" style="gap:7px">
+            <li><strong>I1.1</strong> Information vs. Repräsentation durch Daten</li>
+            <li><strong>I1.3</strong> Daten mit geeigneten Werkzeugen organisieren</li>
+            <li><strong>I1.4</strong> geeignete Darstellungsform wählen</li>
+          </ul>
+          <p style="margin-top:12px;margin-bottom:6px"><strong>Modul „Präsentation“ (Computerkompetenz):</strong> zielgruppenorientiert präsentieren</p>
+          <div class="chips"><span class="chip alt">P2.3</span><span class="chip alt">P3.3</span><span class="chip alt">P3.4</span><span class="chip alt">I3.4</span></div>
+        </div>
+      </div>
+      <p class="step" style="margin-top:18px"><span class="tagline good">Bonus</span> &nbsp;Über das Thema <strong>Mediennutzung</strong> ergibt sich ein Anknüpfungspunkt an <strong>I4.1</strong> – Auswirkungen von Informatiksystemen auf den Alltag reflektieren.</p>
+    </div>
+    <aside class="notes">Pflichtaspekt 8. Kernbotschaft: Das Projekt trifft das KC nicht nur am Rande, sondern liegt <strong>genau im Modul „Verwaltung von Daten“</strong> und verbindet es sauber mit dem Modul „Präsentation“. Die Kompetenz-Codes nur kurz zeigen – Details liegen im Anhang für Rückfragen.</aside>
+  </section>
+
+  <!-- 5 REIHE -->
+  <section class="slide" data-tag="Die Reihe">
+    <div class="wrap">
+      <p class="kicker">Die Unterrichtsreihe im Überblick</p>
+      <h2>Eingebettet: das Umfrageprojekt</h2>
+      <div class="rule"></div>
+      <div class="timeline">
+        <div class="ph-step"><div class="n">PHASE 0</div><div class="t">Excel-<br>Grundlagen</div></div>
+        <div class="ph-step"><div class="n">PHASE 1</div><div class="t">Fragebogen<br>entwickeln</div></div>
+        <div class="ph-step"><div class="n">PHASE 2</div><div class="t">Umfrage<br>(Papier)</div></div>
+        <div class="ph-step"><div class="n">PHASE 3</div><div class="t">Auszählen<br>(Strichliste)</div></div>
+        <div class="ph-step focus"><div class="n">PHASE 4 ★</div><div class="t">Daten<br>einpflegen</div></div>
+        <div class="ph-step focus"><div class="n">PHASE 5 ★</div><div class="t">Kennwerte<br>berechnen</div></div>
+        <div class="ph-step focus"><div class="n">PHASE 6 ★</div><div class="t">Visuali-<br>sieren</div></div>
+        <div class="ph-step"><div class="n">PHASE 7</div><div class="t">Präsentieren<br>(→ PowerPoint)</div></div>
+      </div>
+      <div class="focus-band step">★ Schwerpunkt der heutigen Präsentation – hier werden die selbst erhobenen Daten zur Aussage.</div>
+      <p class="step muted" style="margin-top:16px">Erst das Werkzeug verstehen (Phase 0), dann ein <strong>echtes Problem</strong> damit lösen (Phasen 1–7). Die Schülerinnen und Schüler erleben Excel nicht als Selbstzweck, sondern als Mittel, um die eigene Lebenswelt zu untersuchen.</p>
+    </div>
+    <aside class="notes">Wichtigste Orientierungsfolie. Mit der Hand die Timeline „abschreiten“. Betonen: <strong>Phasen 4–6 sind der Schwerpunkt</strong> und sitzen im Herzen der Reihe. Phase 0 ist die Werkzeug-Einführung; Phasen 1–3 liefern die echten Daten; Phase 7 schließt mit der Präsentation den Kreis.</aside>
+  </section>
+
+  <!-- 6 EINSTIEG -->
+  <section class="slide" data-tag="Einstieg">
+    <div class="split">
+      <div>
+        <p class="kicker">Motivierender Einstieg</p>
+        <h2>„Welche Medien nutzen wir wirklich – und wie oft?“</h2>
+        <div class="rule"></div>
+        <ul class="bul">
+          <li class="step"><strong>Schätzen:</strong> Jeder schätzt seine meistgenutzte Medien-Kategorie und die Nutzungsdauer pro Tag.</li>
+          <li class="step"><strong>Aufdecken:</strong> Abgleich mit der Bildschirmzeit-/App-Statistik des eigenen Handys → <em>Aha-Effekt</em> (Schätzung ≠ Realität).</li>
+          <li class="step"><strong>Leitfrage der Reihe:</strong> „Welche Medien nutzt <strong>unsere Klasse</strong> – und wie oft?“</li>
+        </ul>
+      </div>
+      <div class="card accentcard step">
+        <h3 style="font-size:20px">Warum das zieht</h3>
+        <ul class="bul" style="gap:10px">
+          <li>persönlich relevant &amp; aktuell</li>
+          <li>Diskrepanz Schätzung ↔ Realität erzeugt Neugier</li>
+          <li>die Daten gehören <strong>ihnen</strong> – nicht dem Lehrbuch</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">Pflichtaspekt 6 (motivierender Einstieg). Der Schätz-/Aufdeck-Moment ist der emotionale Haken. Ab hier ist die Klasse „ihre eigene Stichprobe“. Diese Leitfrage trägt durch die ganze Reihe.</aside>
+  </section>
+
+  <!-- 7 SCHWERPUNKT AUFTAKT -->
+  <section class="slide" data-tag="Schwerpunkt">
+    <div class="wrap" style="text-align:center">
+      <p class="kicker" style="color:var(--accent)">Schwerpunkt</p>
+      <h1 style="font-size:clamp(30px,5vw,56px)">Von echten Daten<br>zur belastbaren Aussage</h1>
+      <div class="rule" style="margin:24px auto 28px"></div>
+      <div class="timeline" style="max-width:880px;margin:0 auto">
+        <div class="ph-step focus"><div class="t" style="color:#fff">Eingeben</div></div>
+        <div class="ph-step focus"><div class="t" style="color:#fff">Bereinigen</div></div>
+        <div class="ph-step focus"><div class="t" style="color:#fff">Berechnen</div></div>
+        <div class="ph-step focus"><div class="t" style="color:#fff">Visualisieren</div></div>
+        <div class="ph-step focus"><div class="t" style="color:#fff">Präsentieren</div></div>
+      </div>
+      <p class="lead step" style="margin-top:28px;max-width:760px;margin-left:auto;margin-right:auto">Der rote Faden des Schwerpunkts – jede Station ist zugleich ein Stück <strong>Datenkompetenz</strong>.</p>
+    </div>
+    <aside class="notes">Übergang in den Kern. Diese fünf Stationen strukturieren die nächsten Minuten. Klarmachen: Wir arbeiten mit den <strong>selbst erhobenen</strong> Klassendaten – das ist der Unterschied zu fertigen Übungsdatensätzen.</aside>
+  </section>
+
+  <!-- 8 EXCEL GRUNDLAGEN -->
+  <section class="slide" data-tag="Excel-Logik">
+    <div class="split">
+      <div>
+        <p class="kicker">Phase 0 · das mentale Modell</p>
+        <h2>Die Denklogik von Excel</h2>
+        <div class="rule"></div>
+        <ul class="bul">
+          <li class="step">Das <strong>Tabellenraster</strong>: jede Zelle hat eine <strong>eindeutige Adresse</strong> aus Spalte + Zeile → <span class="mono">B2</span></li>
+          <li class="step"><strong>Bezüge</strong> statt Zahlen: <span class="mono">=A1+B1</span> rechnet mit Positionen, nicht mit Werten</li>
+          <li class="step"><strong>relativ vs. absolut</strong>: <span class="mono">B2</span> wandert beim Kopieren, <span class="mono">$B$2</span> bleibt fest</li>
+          <li class="step"><strong>Shortcuts</strong>: Ausfüllkästchen (1,2,3 …), <span class="mono">Strg</span>+Pfeil, <span class="mono">Strg</span>+Z</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="font-size:18px">Mini-Beispiel: Adressierung</h3>
+        <table style="box-shadow:none;font-size:15px">
+          <tr><th style="width:46px"></th><th>A · Name</th><th>B · Minuten</th></tr>
+          <tr><td class="mono">1</td><td>Lina</td><td class="mono">120</td></tr>
+          <tr><td class="mono">2</td><td>Ben</td><td class="mono">95</td></tr>
+          <tr><td class="mono">3</td><td>…</td><td class="mono">…</td></tr>
+        </table>
+        <p class="muted" style="font-size:14.5px;margin-top:12px">„Zelle <span class="mono">B2</span>“ = Spalte B, Zeile 2 = <strong>95</strong>. Diese eindeutige Zuordnung ist der Kern – wer sie verstanden hat, versteht Tabellenkalkulation.</p>
+      </div>
+    </div>
+    <aside class="notes">Nicht Klick-Tutorial, sondern <strong>Konzept</strong>: die explizite Zuordnung von Position im Datenraster. „Excel rechnet mit Adressen, nicht mit Zahlen.“ Relativ/absolut hier nur kurz anreißen – kommt bei den Stolpersteinen wieder.</aside>
+  </section>
+
+  <!-- 9 KENNWERTE -->
+  <section class="slide" data-tag="Berechnen">
+    <div class="wrap">
+      <p class="kicker">Phase 5 · statistische Kennwerte</p>
+      <h2>Aus Daten werden Aussagen</h2>
+      <div class="rule"></div>
+      <div class="split" style="grid-template-columns:.82fr 1.18fr">
+        <div class="card soft">
+          <h3 style="font-size:16px">Bildschirmzeit / Tag (Min) · <span class="ph">Beispieldaten</span></h3>
+          <table style="box-shadow:none;font-size:14px">
+            <tr><th>#</th><th>Min</th><th>#</th><th>Min</th></tr>
+            <tr><td class="mono">1</td><td class="mono">90</td><td class="mono">6</td><td class="mono">180</td></tr>
+            <tr><td class="mono">2</td><td class="mono">120</td><td class="mono">7</td><td class="mono">195</td></tr>
+            <tr><td class="mono">3</td><td class="mono">150</td><td class="mono">8</td><td class="mono">210</td></tr>
+            <tr><td class="mono">4</td><td class="mono">150</td><td class="mono">9</td><td class="mono">240</td></tr>
+            <tr><td class="mono">5</td><td class="mono">165</td><td class="mono">10</td><td class="mono">300</td></tr>
+          </table>
+        </div>
+        <div>
+          <table style="font-size:15px">
+            <tr><th>Kennwert</th><th>Formel in Excel</th><th>Ergebnis</th></tr>
+            <tr><td>Mittelwert</td><td class="code">=MITTELWERT(B2:B11)</td><td class="res">180 min</td></tr>
+            <tr><td>Minimum</td><td class="code">=MIN(B2:B11)</td><td class="res">90</td></tr>
+            <tr><td>Maximum</td><td class="code">=MAX(B2:B11)</td><td class="res">300</td></tr>
+            <tr><td>Spannweite</td><td class="code">=MAX(B2:B11)-MIN(B2:B11)</td><td class="res">210</td></tr>
+            <tr><td>Standardabw.</td><td class="code">=STABW.S(B2:B11)</td><td class="res">≈ 60</td></tr>
+          </table>
+          <div class="focus-band step" style="margin-top:16px">Deutung: <strong>Ø 180 min = 3 Stunden/Tag</strong> – aber große Streuung (σ ≈ 60 min). Die Zahl <em>und</em> ihre Streuung erzählen die Geschichte.</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Phase 5. Hier wird Mathematik <strong>begreifbar</strong>, weil es die eigenen Daten sind. Den Bogen spannen: Mittelwert allein genügt nicht – erst die Spannweite/Standardabweichung zeigt, wie unterschiedlich die Klasse ist. <strong>Beispieldaten sind exemplarisch</strong> (anpassen, falls echte Werte gezeigt werden sollen).</aside>
+  </section>
+
+  <!-- 10 BEREINIGEN -->
+  <section class="slide" data-tag="Bereinigen">
+    <div class="split">
+      <div>
+        <p class="kicker">Phase 4 · die unterschätzte Phase</p>
+        <h2>Echte Daten sind „schmutzig“</h2>
+        <div class="rule"></div>
+        <ul class="bul">
+          <li class="step"><strong>Leere Zellen</strong> (nicht ausgefüllte Fragen) – wie zählen?</li>
+          <li class="step"><strong>Komma vs. Punkt</strong>: <span class="mono">1,5</span> ≠ <span class="mono">1.5</span> → Text statt Zahl</li>
+          <li class="step"><strong>Uneinheitliche Eingaben</strong>: „2h“, „120“, „zwei Stunden“</li>
+          <li class="step"><strong>Ausreißer</strong> prüfen: Tippfehler oder echter Wert?</li>
+        </ul>
+      </div>
+      <div class="card accentcard step">
+        <h3 style="font-size:19px">„Müll rein = Müll raus“</h3>
+        <p>Vor jeder Berechnung steht die <strong>Datenbereinigung</strong>. Hilfen:</p>
+        <ul class="bul" style="gap:9px;margin-top:8px">
+          <li>gemeinsame <strong>Eingaberegeln</strong> (Einheit: immer Minuten)</li>
+          <li><strong>Datenüberprüfung</strong> / Dropdowns in Excel</li>
+          <li>Stichprobenkontrolle in der Gruppe</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">Phase 4 – die Phase, die man im Plan immer zu kurz ansetzt (siehe später „Was ich ändern würde“). Wichtiger Lernmoment: Datenqualität entscheidet über die Aussagekraft. Knüpft direkt an die Stolperstein-Folie an.</aside>
+  </section>
+
+  <!-- 11 VISUALISIERUNG -->
+  <section class="slide" data-tag="Visualisieren">
+    <div class="wrap">
+      <p class="kicker">Phase 6 · Visualisierung nach Standards</p>
+      <h2>Ein Diagramm muss <em>ohne Worte</em> verständlich sein</h2>
+      <div class="rule"></div>
+      <div class="split" style="grid-template-columns:1fr 1fr;gap:28px">
+        <div>
+          <div class="grid g2" style="gap:14px">
+            <div class="chartbox">
+              <div style="text-align:center;font-size:12px;color:var(--bad);font-weight:800;margin-bottom:4px">SO NICHT</div>
+              <svg viewBox="0 0 240 170" role="img" aria-label="schlechtes Diagramm ohne Beschriftung">
+                <rect x="20" y="70" width="34" height="80" fill="#ef4444"/>
+                <rect x="64" y="40" width="34" height="110" fill="#22c55e"/>
+                <rect x="108" y="95" width="34" height="55" fill="#eab308"/>
+                <rect x="152" y="20" width="34" height="130" fill="#a855f7"/>
+                <rect x="196" y="110" width="30" height="40" fill="#f97316"/>
+              </svg>
+              <div style="font-size:12.5px;color:var(--bad);margin-top:4px">kein Titel · keine Achsen · grelle Farben · unsortiert</div>
+            </div>
+            <div class="chartbox">
+              <div style="text-align:center;font-size:12px;color:var(--good);font-weight:800;margin-bottom:4px">SO BESSER</div>
+              <svg viewBox="0 0 240 170" role="img" aria-label="gutes Diagramm mit Achsen und Beschriftung">
+                <text x="120" y="13" text-anchor="middle" font-size="10" font-weight="700" fill="#0f172a">Nutzung nach Kategorie (Min/Tag)</text>
+                <line x1="34" y1="24" x2="34" y2="138" stroke="#94a3b8" stroke-width="1"/>
+                <line x1="34" y1="138" x2="232" y2="138" stroke="#94a3b8" stroke-width="1"/>
+                <text x="9" y="84" font-size="8" fill="#64748b" transform="rotate(-90 9 84)" text-anchor="middle">Min/Tag</text>
+                <g font-size="7" fill="#94a3b8"><text x="30" y="140" text-anchor="end">0</text><text x="30" y="84" text-anchor="end">40</text><text x="30" y="30" text-anchor="end">80</text></g>
+                <g fill="#4f46e5">
+                  <rect x="48" y="40" width="26" height="98"/><rect x="86" y="68" width="26" height="70"/><rect x="124" y="96" width="26" height="42"/><rect x="162" y="113" width="26" height="25"/><rect x="200" y="121" width="26" height="17"/>
+                </g>
+                <g font-size="6.5" fill="#475569" text-anchor="middle"><text x="61" y="150">Soz.M.</text><text x="99" y="150">Video</text><text x="137" y="150">Spiele</text><text x="175" y="150">Musik</text><text x="213" y="150">Schule</text></g>
+              </svg>
+              <div style="font-size:12.5px;color:var(--good);margin-top:4px">Titel · beschriftete Achsen · 1 Farbe · sortiert</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:18px;margin-bottom:6px">Die Standard-Checkliste</h3>
+          <ul class="bul" style="gap:9px">
+            <li class="step"><span class="ok">✓</span> aussagekräftiger <strong>Titel</strong></li>
+            <li class="step"><span class="ok">✓</span> <strong>beschriftete Achsen</strong> inkl. Einheit</li>
+            <li class="step"><span class="ok">✓</span> passender <strong>Diagrammtyp</strong> (Kategorien → Säulen, Anteile → Kreis, Verlauf → Linie)</li>
+            <li class="step"><span class="ok">✓</span> sparsame, einheitliche <strong>Farben</strong></li>
+            <li class="step"><span class="ok">✓</span> Datenbasis / <span class="mono">n =</span> angeben</li>
+          </ul>
+          <p class="step muted" style="font-size:15px;margin-top:12px">→ Diagramm in Excel markieren, kopieren und <strong>in PowerPoint einfügen</strong> – fertig für Phase 7.</p>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Phase 6 – mein didaktisches Lieblingsstück. Der „so nicht / so besser“-Vergleich macht Standards sofort sichtbar. Achsenbeschriftung, Titel und Farbwahl wurden explizit geübt, damit die Diagramme sauber nach PowerPoint übernommen werden können.</aside>
+  </section>
+
+  <!-- 12 PRODUKTE -->
+  <section class="slide" data-tag="Ergebnis">
+    <div class="split">
+      <div class="chartbox">
+        <svg viewBox="0 0 460 300" role="img" aria-label="Säulendiagramm: durchschnittliche Nutzung nach Kategorie">
+          <text x="230" y="22" text-anchor="middle" font-size="15" font-weight="800" fill="#0f172a">Ø tägliche Nutzung nach Kategorie</text>
+          <text x="230" y="40" text-anchor="middle" font-size="11" fill="#64748b">Mediennutzung Klasse 10 · n = 28 (Beispiel)</text>
+          <line x1="60" y1="58" x2="60" y2="250" stroke="#94a3b8"/>
+          <line x1="60" y1="250" x2="440" y2="250" stroke="#94a3b8"/>
+          <text x="22" y="158" font-size="11" fill="#64748b" transform="rotate(-90 22 158)" text-anchor="middle">Minuten pro Tag</text>
+          <g font-size="10" fill="#94a3b8" text-anchor="end">
+            <text x="54" y="253">0</text><text x="54" y="202">20</text><text x="54" y="154">40</text><text x="54" y="106">60</text><text x="54" y="62">80</text>
+            <line x1="58" y1="250" x2="60" y2="250"/>
+          </g>
+          <g stroke="#e2e8f0"><line x1="60" y1="202" x2="440" y2="202"/><line x1="60" y1="154" x2="440" y2="154"/><line x1="60" y1="106" x2="440" y2="106"/><line x1="60" y1="62" x2="440" y2="62"/></g>
+          <g fill="#4f46e5">
+            <rect x="84" y="82" width="48" height="168"/><rect x="156" y="130" width="48" height="120"/><rect x="228" y="178" width="48" height="72"/><rect x="300" y="207" width="48" height="43"/><rect x="372" y="221" width="48" height="29"/>
+          </g>
+          <g font-size="11" font-weight="700" fill="#3730a3" text-anchor="middle"><text x="108" y="76">70</text><text x="180" y="124">50</text><text x="252" y="172">30</text><text x="324" y="201">18</text><text x="396" y="215">12</text></g>
+          <g font-size="10.5" fill="#475569" text-anchor="middle"><text x="108" y="266">Soziale M.</text><text x="180" y="266">Video</text><text x="252" y="266">Spiele</text><text x="324" y="266">Musik</text><text x="396" y="266">Schule</text></g>
+        </svg>
+      </div>
+      <div>
+        <p class="kicker">Phase 7 · Ergebnis aus der Lerngruppe</p>
+        <h2>Das Ergebnis einer Gruppe</h2>
+        <div class="rule"></div>
+        <p class="lead">Kernaussage der Gruppe:</p>
+        <div class="card accentcard" style="margin-top:10px">
+          <p style="font-size:clamp(17px,2vw,22px);color:var(--ink)">„<strong>Soziale Medien dominieren</strong> die Bildschirmzeit unserer Klasse – fast so viel wie Video und Spiele zusammen.“</p>
+        </div>
+        <p class="muted step" style="margin-top:14px;font-size:15px"><span class="ph">Hier ggf. ein echtes, anonymisiertes Diagramm einer Gruppe einsetzen.</span></p>
+      </div>
+    </div>
+    <aside class="notes">Sichtbar machen, was am Ende herauskommt: ein sauberes Diagramm <strong>plus eine sprachlich klare Aussage</strong>. Genau hier zahlt sich die Standard-Checkliste aus. Wenn vorhanden: echtes (anonymisiertes) Produkt zeigen – das überzeugt das Kollegium am meisten.</aside>
+  </section>
+
+  <!-- 13 STOLPERSTEINE -->
+  <section class="slide" data-tag="Stolpersteine">
+    <div class="wrap">
+      <p class="kicker">Schwierigkeiten – damit andere sie vermeiden</p>
+      <h2>Vier Stolpersteine &amp; ihre Lösung</h2>
+      <div class="rule"></div>
+      <table>
+        <tr><th style="width:23%">Problem</th><th style="width:34%">Was passiert</th><th>Gegenmaßnahme</th></tr>
+        <tr><td><strong>Fragebogen- &amp; Item-Design</strong></td><td>Items unklar oder ohne Skala → nicht auswertbar; Items auf der Rückseite übersehen</td><td>Items vorab im Probedurchlauf testen, feste Antwortskala (z. B. 1–4), klares Layout &amp; Nummerierung, Rückseite kennzeichnen</td></tr>
+        <tr><td><strong>Datenorganisation</strong></td><td>uneinheitlich/unstrukturiert erfasst → Auswertung umständlich oder falsch</td><td>feste Tabellenstruktur, Codiervorgaben, gemeinsame Eingaberegeln</td></tr>
+        <tr><td><strong>Zellbezüge &amp; Datendeutung</strong></td><td>Formeln „verrutschen“ (relativ statt absolut), Werte falsch gedeutet → falsche Ergebnisse</td><td>früh <span class="mono">$</span>-Bezüge zeigen, „Formeln anzeigen“ (<span class="mono">Strg+#</span>), Stichprobenkontrolle, Ergebnisse plausibilisieren</td></tr>
+        <tr><td><strong>Diagramme deuten</strong></td><td>Diagramm wird erstellt, aber nicht verstanden – auch das eigene nicht</td><td>Kernaussage in einem Satz formulieren, gezielte Lesefragen, Peer-Erklärung</td></tr>
+      </table>
+    </div>
+    <aside class="notes">Pflichtaspekt 5 – für das Kollegium oft der wertvollste Teil. Pro Zeile ein Satz aus eigener Erfahrung. Besonders betonen: <strong>Fragebogen-Design</strong> und <strong>Datenorganisation</strong> haben am meisten Zeit gekostet. Gegenmaßnahmen sind direkt übertragbar.</aside>
+  </section>
+
+  <!-- 14 BEWERTUNG -->
+  <section class="slide" data-tag="Bewertung">
+    <div class="split">
+      <div>
+        <p class="kicker">Leistungsbewertung (KC-konform)</p>
+        <h2>Produkt + Prozess + Reflexion</h2>
+        <div class="rule"></div>
+        <p>An unserer Schule zählt die Informatiknote <strong>30 % schriftlich</strong> und <strong>70 % mündlich/fachpraktisch</strong>. Das Excel-Projekt ist eine <strong>fachpraktische Leistung</strong> – es liegt im 70 %-Anteil.</p>
+        <div style="display:flex;height:38px;border-radius:9px;overflow:hidden;margin:16px 0;font-weight:800;color:#fff;box-shadow:var(--shadow);font-size:13.5px">
+          <div style="width:30%;background:#94a3b8;display:grid;place-items:center">30 % schriftl.</div>
+          <div style="width:70%;background:var(--accent);display:grid;place-items:center;text-align:center;line-height:1.12;padding:0 6px">70 % mündlich / fachpraktisch <span style="opacity:.82;font-weight:600">· hier zählt das Projekt</span></div>
+        </div>
+        <p class="step muted" style="font-size:15px">Das KC betont fachpraktische Leistungen – <strong>Prozess &amp; Dokumentation zählen mit</strong>. Das Raster wird vorab ausgegeben.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:18px">So entsteht die Projektnote <span class="muted" style="font-weight:500;font-size:14px">(Vorschlag)</span></h3>
+        <table style="box-shadow:none;font-size:15px">
+          <tr><th>Bereich</th><th>Anteil</th></tr>
+          <tr><td>Produkt – Excel-Datei (Formeln, saubere Diagramme)</td><td class="res">40 %</td></tr>
+          <tr><td>Prozess &amp; Doku – Bereinigung, Zusammenarbeit</td><td class="res">25 %</td></tr>
+          <tr><td>Präsentation – Klarheit, Fachsprache, Standards</td><td class="res">25 %</td></tr>
+          <tr><td>Reflexion – kurze schriftliche Selbsteinschätzung</td><td class="res">10 %</td></tr>
+        </table>
+      </div>
+    </div>
+    <aside class="notes">Pflichtaspekt 7. Die 30/70-Gewichtung (schriftlich / mündlich-fachpraktisch) ist die reale Notenpraxis der Schule; das Projekt liegt im 70 %-Teil. Die interne Projektgewichtung (40/25/25/10) ist ein Vorschlag. Prozess &amp; Dokumentation zählen laut KC mit; die Reflexion stärkt die Selbsteinschätzung.</aside>
+  </section>
+
+  <!-- 15 REFLEXION -->
+  <section class="slide" data-tag="Reflexion">
+    <div class="wrap">
+      <p class="kicker">Rückblick</p>
+      <h2>Was lief gut – was würde ich ändern?</h2>
+      <div class="rule"></div>
+      <div class="grid g2">
+        <div class="card" style="border-top:4px solid var(--good)">
+          <h3>Hat gut geklappt</h3>
+          <ul class="bul" style="gap:10px">
+            <li class="step">hohe Motivation durch <strong>eigene</strong> Daten</li>
+            <li class="step">sichtbarer Kompetenzzuwachs (Formeln → Diagramme)</li>
+            <li class="step">Diagramm-Standards „saßen“ am Ende</li>
+          </ul>
+        </div>
+        <div class="card" style="border-top:4px solid var(--warn)">
+          <h3>Würde ich ändern <span class="ph" style="font-size:13px">anpassen</span></h3>
+          <ul class="bul" style="gap:10px">
+            <li class="step">mehr Zeit für die <strong>Datenbereinigung</strong> einplanen</li>
+            <li class="step"><strong>Excel-Startdatei</strong> mit fertigen Spaltenköpfen vorgeben</li>
+            <li class="step">pro Gruppe einen „Datenmanager“ (Datei-Organisation)</li>
+            <li class="step"><strong>Datenschutz/Anonymisierung</strong> stärker thematisieren</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Ehrliche Reflexion wirkt souverän. Die rechte Spalte an deine echten Erfahrungen anpassen. „Mehr Zeit für Bereinigung“ und „Startdatei vorgeben“ sind die wirksamsten Stellschrauben für den nächsten Durchgang.</aside>
+  </section>
+
+  <!-- 16 MATERIAL + FAZIT -->
+  <section class="slide" data-tag="Material &amp; Fazit">
+    <div class="wrap">
+      <p class="kicker">Zum Mitnehmen</p>
+      <h2>Material &amp; drei Take-aways</h2>
+      <div class="rule"></div>
+      <div class="split" style="grid-template-columns:1fr 1fr;gap:30px">
+        <div class="card soft">
+          <h3 style="font-size:18px">Ideensammlung für die Gruppe</h3>
+          <ul class="bul" style="gap:9px">
+            <li>Arbeitsblatt <strong>Excel-Grundlagen</strong></li>
+            <li><strong>Fragebogen-Vorlage</strong> „Mediennutzung“</li>
+            <li>Anleitung <strong>Auswertung &amp; Visualisierung</strong></li>
+            <li><strong>Bewertungsraster</strong></li>
+          </ul>
+        </div>
+        <div>
+          <div class="grid" style="gap:12px">
+            <div class="card accentcard step"><strong>1.</strong> Echte, selbst erhobene Daten machen Statistik <strong>begreifbar</strong> und motivieren.</div>
+            <div class="card accentcard step"><strong>2.</strong> Visualisierung ist <strong>Handwerk mit Standards</strong> – das lässt sich lehren und prüfen.</div>
+            <div class="card accentcard step"><strong>3.</strong> Datenkompetenz verbindet <strong>Kerncurriculum</strong> und <strong>Lebenswelt</strong>.</div>
+          </div>
+        </div>
+      </div>
+      <p class="step" style="margin-top:24px;text-align:center;font-size:clamp(20px,2.6vw,30px);font-weight:800;color:var(--ink)">Vielen Dank – ich freue mich auf Eure Fragen.</p>
+    </div>
+    <aside class="notes">Pflichtaspekt 6 (Material als Ideensammlung) plus Abschluss. Auf das Materialpaket verweisen (wird geteilt). Mit den drei Take-aways enden und in die Fragerunde überleiten. Anhangsfolien stehen für Rückfragen bereit.</aside>
+  </section>
+
+  <!-- 17 ANHANG KC -->
+  <section class="slide" data-tag="Anhang · KC-Detail">
+    <div class="wrap">
+      <p class="kicker">Anhang · für Rückfragen</p>
+      <h2>KC-Detail: „Verwaltung von Daten“</h2>
+      <div class="rule"></div>
+      <table style="font-size:14.5px">
+        <tr><th>Stufe</th><th>Die Schülerinnen und Schüler …</th><th>Kompetenzen</th></tr>
+        <tr><td><strong>Basis</strong></td><td>nennen Kriterien zur Strukturierung; erstellen Tabellen mit einer Tabellenkalkulation; gewinnen Informationen (Filtern/Sortieren); stellen Daten als Diagramme dar</td><td class="mono">P1.3 P3.2 P4.2 P5.1 I1.3</td></tr>
+        <tr><td><strong>Vertiefung</strong></td><td>unterscheiden Datensatz, Attribut, Schlüsselattribut, Tabelle; formulieren einfache Suchanfragen</td><td class="mono">P2.2 P3.1 P4.1 I1.3</td></tr>
+        <tr><td><strong>Ergänzung</strong></td><td>nutzen Aggregatfunktionen; erläutern Chancen/Risiken automatisierter Datenanalyse</td><td class="mono">P2.2 P4.4 I1.3 I4.1</td></tr>
+      </table>
+      <p class="muted" style="margin-top:14px;font-size:14.5px">Schwerpunkt der Reihe liegt auf <strong>Basis</strong> (Tabellen, Kennwerte, Diagramme); Mittelwert/Standardabweichung gehen punktuell in die Vertiefung.</p>
+    </div>
+    <aside class="notes">Reservefolie. Nur bei Nachfrage zeigen. Zeigt, dass die Reihe bewusst auf der Basis-Stufe aufsetzt und in Richtung Vertiefung öffnet.</aside>
+  </section>
+
+  <!-- 18 ANHANG FRAGEBOGEN -->
+  <section class="slide" data-tag="Anhang · Fragebogen">
+    <div class="wrap">
+      <p class="kicker">Anhang · für Rückfragen</p>
+      <h2>Aufbau des Fragebogens</h2>
+      <div class="rule"></div>
+      <div class="grid g2">
+        <div class="card"><h3 style="font-size:17px">Beispiel-Items</h3>
+          <ul class="bul" style="gap:8px">
+            <li>Bildschirmzeit gestern (Minuten) — <span class="muted">offen/Zahl</span></li>
+            <li>Meistgenutzte App-Kategorie — <span class="muted">Auswahl</span></li>
+            <li>Gerät überwiegend — <span class="muted">Handy / Tablet / PC</span></li>
+            <li>Zustimmung: „Ich nutze Medien zu viel.“ — <span class="muted">Skala 1–5</span></li>
+          </ul>
+        </div>
+        <div class="card soft"><h3 style="font-size:17px">Kurz-Grundlagen (Side-Note)</h3>
+          <ul class="bul" style="gap:8px">
+            <li><strong>offene</strong> vs. <strong>geschlossene</strong> Fragen</li>
+            <li><strong>auswertbar</strong> formulieren (Einheiten, klare Kategorien)</li>
+            <li>eindeutig, neutral, nicht suggestiv</li>
+          </ul>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:14px;font-size:14.5px">Fragebogen-Grundlagen bewusst knapp gehalten – Fokus bleibt auf der Datenauswertung.</p>
+    </div>
+    <aside class="notes">Reservefolie. Falls gefragt wird, wie der Fragebogen entstand: geschlossene, gut auswertbare Items waren der Schlüssel, damit die Excel-Auswertung gelingt.</aside>
+  </section>
+
+  <!-- 19 ANHANG FORMELN -->
+  <section class="slide" data-tag="Anhang · Formeln">
+    <div class="wrap">
+      <p class="kicker">Anhang · Spickzettel</p>
+      <h2>Excel-Formeln der Reihe</h2>
+      <div class="rule"></div>
+      <div class="grid g2" style="gap:14px 30px">
+        <table style="font-size:15px">
+          <tr><th>Zweck</th><th>Formel</th></tr>
+          <tr><td>Summe</td><td class="code">=SUMME(B2:B11)</td></tr>
+          <tr><td>Mittelwert</td><td class="code">=MITTELWERT(B2:B11)</td></tr>
+          <tr><td>Minimum / Maximum</td><td class="code">=MIN(…) =MAX(…)</td></tr>
+          <tr><td>Spannweite</td><td class="code">=MAX(…)-MIN(…)</td></tr>
+        </table>
+        <table style="font-size:15px">
+          <tr><th>Zweck</th><th>Formel</th></tr>
+          <tr><td>Standardabweichung</td><td class="code">=STABW.S(B2:B11)</td></tr>
+          <tr><td>Varianz</td><td class="code">=VAR.S(B2:B11)</td></tr>
+          <tr><td>Median</td><td class="code">=MEDIAN(B2:B11)</td></tr>
+          <tr><td>Anzahl (gefüllt)</td><td class="code">=ANZAHL(B2:B11)</td></tr>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:14px;font-size:14.5px">Absolute Bezüge mit <span class="mono">$</span> (z. B. <span class="mono">=$B$2</span>) – die wichtigste Hürde beim Kopieren von Formeln.</p>
+    </div>
+    <aside class="notes">Reservefolie / Spickzettel. Praktisch für Detailfragen zu konkreten Funktionen.</aside>
+  </section>
+
+  <!-- 20 ANHANG PHASENPLAN -->
+  <section class="slide" data-tag="Anhang · Stundenplan">
+    <div class="wrap">
+      <p class="kicker">Anhang · Verlaufsübersicht</p>
+      <h2>Phasenplan (≈ 5–6 Doppelstunden)</h2>
+      <div class="rule"></div>
+      <table style="font-size:14.5px">
+        <tr><th>Phase</th><th>Inhalt</th><th>Std.</th></tr>
+        <tr><td>0</td><td>Excel-Grundlagen: Zelllogik, Bezüge, Formeln, Shortcuts, erstes Diagramm</td><td class="res">3</td></tr>
+        <tr><td>1</td><td>Fragebogen entwickeln (Kurz-Grundlagen, Items festlegen)</td><td class="res">1</td></tr>
+        <tr><td>2–3</td><td>Umfrage auf Papier durchführen &amp; auszählen</td><td class="res">2</td></tr>
+        <tr><td>4–6 ★</td><td><strong>Schwerpunkt:</strong> Daten einpflegen, bereinigen, Kennwerte, Visualisierung</td><td class="res">4</td></tr>
+        <tr><td>7</td><td>Präsentation erstellen (Export → PowerPoint) &amp; vortragen</td><td class="res">2</td></tr>
+      </table>
+      <p class="muted" style="margin-top:12px;font-size:14px">Stundenzahlen an den eigenen Verlauf anpassen.</p>
+    </div>
+    <aside class="notes">Reservefolie. Zeigt den zeitlichen Verlauf und nochmals, wo der Schwerpunkt sitzt. Gut für die Frage „Wie viele Stunden hat das gedauert?“.</aside>
+  </section>
+
+</main>
+
+<div id="notes"><div class="lbl">Sprechernotizen</div><div class="notes-body"></div></div>
+
+<script>
+(function(){
+  "use strict";
+  document.body.classList.add("js");
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var bar = document.getElementById("bar");
+  var pageno = document.getElementById("pageno");
+  var tag = document.getElementById("tag");
+  var notes = document.getElementById("notes");
+  var notesBody = notes.querySelector(".notes-body");
+  var hint = document.getElementById("hint");
+  var current = 0, notesOn = false;
+
+  function steps(slide){ return Array.prototype.slice.call(slide.querySelectorAll(".step")); }
+
+  function render(revealAll){
+    slides.forEach(function(s,i){ s.classList.toggle("active", i===current); });
+    var slide = slides[current];
+    var st = steps(slide);
+    st.forEach(function(e){ e.classList.toggle("on", !!revealAll); });
+    slide.setAttribute("data-step", revealAll ? st.length : 0);
+    chrome();
+  }
+  function chrome(){
+    var pct = slides.length>1 ? (current/(slides.length-1))*100 : 0;
+    bar.style.width = pct + "%";
+    pageno.textContent = (current+1) + " / " + slides.length;
+    tag.innerHTML = slides[current].getAttribute("data-tag") || "";
+    var n = slides[current].querySelector(".notes");
+    notesBody.innerHTML = n ? n.innerHTML : "<em>—</em>";
+    notes.classList.toggle("show", notesOn);
+    if(location.hash !== "#"+(current+1)){ history.replaceState(null,"","#"+(current+1)); }
+  }
+  function go(i, revealAll){
+    current = Math.max(0, Math.min(slides.length-1, i));
+    render(revealAll);
+  }
+  function next(){
+    var slide = slides[current];
+    var st = steps(slide);
+    var shown = parseInt(slide.getAttribute("data-step")||"0",10);
+    if(shown < st.length){ st[shown].classList.add("on"); slide.setAttribute("data-step", shown+1); return; }
+    if(current < slides.length-1) go(current+1, false);
+  }
+  function prev(){
+    var slide = slides[current];
+    var shown = parseInt(slide.getAttribute("data-step")||"0",10);
+    if(shown > 0){ var st = steps(slide); st[shown-1].classList.remove("on"); slide.setAttribute("data-step", shown-1); return; }
+    if(current > 0) go(current-1, true);
+  }
+  function fullscreen(){
+    if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+    else { if(document.exitFullscreen) document.exitFullscreen(); }
+  }
+
+  document.addEventListener("keydown", function(e){
+    var k = e.key;
+    if(k==="ArrowRight"||k==="PageDown"||k===" "||k==="Spacebar"){ e.preventDefault(); next(); }
+    else if(k==="ArrowLeft"||k==="PageUp"){ e.preventDefault(); prev(); }
+    else if(k==="Home"){ e.preventDefault(); go(0,false); }
+    else if(k==="End"){ e.preventDefault(); go(slides.length-1,true); }
+    else if(k==="s"||k==="S"){ notesOn=!notesOn; chrome(); }
+    else if(k==="f"||k==="F"){ fullscreen(); }
+    else if(k==="p"||k==="P"||k==="o"||k==="O"){ document.body.classList.toggle("print-mode"); }
+  });
+
+  document.getElementById("nextb").addEventListener("click", function(e){ e.stopPropagation(); next(); });
+  document.getElementById("prevb").addEventListener("click", function(e){ e.stopPropagation(); prev(); });
+  document.getElementById("deck").addEventListener("click", function(e){
+    if(document.body.classList.contains("print-mode")) return;
+    if(e.target.closest("a,button")) return;
+    next();
+  });
+
+  // hide hint after a moment
+  setTimeout(function(){ hint.classList.add("fade"); }, 6000);
+
+  // start at hash
+  var start = parseInt((location.hash||"#1").replace("#",""),10);
+  go(isNaN(start)?0:start-1, false);
+})();
+</script>
+</body>
+</html>

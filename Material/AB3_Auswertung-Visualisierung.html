@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anleitung · Auswertung &amp; Visualisierung</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0f172a;--soft:#334155;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5;--accent-soft:#eef2ff;--accent-ink:#3730a3;--warn:#d97706;--warn-soft:#fff7ed;--good:#059669;--good-soft:#ecfdf5;--bad:#dc2626}
+body{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;background:#e2e8f0;color:var(--soft);line-height:1.5;padding:24px}
+.page{max-width:840px;margin:0 auto 24px;background:#fff;border-radius:10px;box-shadow:0 10px 30px -12px rgba(15,23,42,.25);overflow:hidden}
+.head{background:linear-gradient(120deg,#4f46e5,#6366f1);color:#fff;padding:22px 32px}
+.head .kick{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:700}
+.head h1{font-size:23px;margin-top:5px}
+.head .sub{font-size:13.5px;opacity:.92;margin-top:6px}
+.body{padding:22px 32px}
+.step{display:flex;gap:14px;margin:14px 0;align-items:flex-start}
+.step .no{flex:none;width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;font-weight:800;display:grid;place-items:center;font-size:16px}
+.step .c{flex:1}
+.step h3{font-size:16px;color:var(--ink);margin-bottom:4px}
+p,li,td{font-size:14px;color:var(--soft)}
+ul,ol{margin:5px 0 5px 20px}li{margin:3px 0}
+strong{color:var(--ink)}
+.mono{font-family:Consolas,ui-monospace,monospace;color:var(--accent-ink);font-weight:600;background:#f8fafc;padding:1px 5px;border-radius:4px;border:1px solid var(--line)}
+.path{font-family:Consolas,monospace;font-size:12.5px;background:#0f172a;color:#fff;padding:2px 8px;border-radius:5px;font-weight:600}
+table{width:100%;border-collapse:collapse;margin:7px 0;font-size:13.3px}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);color:var(--accent-ink)}
+.box{border:1px solid var(--line);border-radius:8px;padding:11px 14px;margin:8px 0;background:#f8fafc;font-size:13.3px}
+.box.warn{background:var(--warn-soft);border-color:#fed7aa}.box.warn b{color:#92400e}
+.box.tip{background:var(--good-soft);border-color:#a7f3d0}.box.tip b{color:#065f46}
+.chk{display:inline-block;width:14px;height:14px;border:1.5px solid #94a3b8;border-radius:3px;vertical-align:-2px;margin-right:7px}
+.foot{padding:13px 32px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.printbtn{position:fixed;top:16px;right:16px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 15px;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px -6px rgba(79,70,229,.6);z-index:50}
+.printbtn:hover{background:#4338ca}
+@media print{body{background:#fff;padding:0}.page{box-shadow:none;border-radius:0;max-width:none;margin:0}.printbtn{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:13mm}.step,.box,table{break-inside:avoid}}
+</style>
+</head>
+<body>
+<button class="printbtn" onclick="window.print()">🖨 Drucken / als PDF</button>
+<div class="page">
+  <div class="head">
+    <div class="kick">Umfrageprojekt Mediennutzung · Anleitung (AB 3)</div>
+    <h1>Von der Strichliste zum Diagramm</h1>
+    <div class="sub">Schritt für Schritt in Microsoft Excel – mit den echten Daten eurer Klasse</div>
+  </div>
+  <div class="body">
+
+    <div class="step"><div class="no">1</div><div class="c">
+      <h3>Daten eingeben</h3>
+      <p>Erste Zeile = <strong>Spaltenköpfe</strong>, danach <strong>eine Zeile pro Wert/Person</strong>. Tippt eure Strichlisten-Ergebnisse ein.</p>
+      <table>
+        <tr><th>A</th><th>B</th><th>C</th></tr>
+        <tr><td>Nr.</td><td>Bildschirmzeit (Min)</td><td>Kategorie</td></tr>
+        <tr><td>1</td><td>120</td><td>Soziale Medien</td></tr>
+        <tr><td>2</td><td>95</td><td>Video</td></tr>
+      </table>
+    </div></div>
+
+    <div class="step"><div class="no">2</div><div class="c">
+      <h3>Daten bereinigen</h3>
+      <ul>
+        <li><strong>Komma statt Punkt</strong> verwenden (<span class="mono">1,5</span>) – sonst erkennt Excel Text statt Zahl.</li>
+        <li><strong>Leere Zellen</strong>: bewusst entscheiden (leer lassen, nicht „0“ eintragen, wenn keine Angabe).</li>
+        <li><strong>Einheit vereinheitlichen</strong> (alles in Minuten).</li>
+        <li><strong>Ausreißer</strong> prüfen: ist „1200“ ein Tippfehler?</li>
+      </ul>
+      <div class="box warn"><b>Achtung:</b> Steht eine Zahl <em>linksbündig</em> in der Zelle, ist sie meist als Text gespeichert und wird nicht mitgerechnet → Format prüfen.</div>
+    </div></div>
+
+    <div class="step"><div class="no">3</div><div class="c">
+      <h3>Kennwerte berechnen</h3>
+      <p>Schreibe die Formeln in freie Zellen unter den Daten (Bereich anpassen, z. B. <span class="mono">B2:B29</span>):</p>
+      <table>
+        <tr><th>Kennwert</th><th>Formel</th></tr>
+        <tr><td>Mittelwert</td><td class="mono">=MITTELWERT(B2:B29)</td></tr>
+        <tr><td>Minimum / Maximum</td><td class="mono">=MIN(B2:B29) · =MAX(B2:B29)</td></tr>
+        <tr><td>Spannweite</td><td class="mono">=MAX(B2:B29)-MIN(B2:B29)</td></tr>
+        <tr><td>Standardabweichung</td><td class="mono">=STABW.S(B2:B29)</td></tr>
+        <tr><td>Anzahl (n)</td><td class="mono">=ANZAHL(B2:B29)</td></tr>
+      </table>
+    </div></div>
+
+    <div class="step"><div class="no">4</div><div class="c">
+      <h3>Diagramm erstellen</h3>
+      <p>Daten markieren → Menü <span class="path">Einfügen → Diagramm</span> → Typ wählen:</p>
+      <ul>
+        <li><strong>Kategorien vergleichen</strong> → Säulen-/Balkendiagramm</li>
+        <li><strong>Anteile am Ganzen</strong> → Kreisdiagramm</li>
+        <li><strong>Verlauf über Zeit</strong> → Liniendiagramm</li>
+      </ul>
+    </div></div>
+
+    <div class="step"><div class="no">5</div><div class="c">
+      <h3>Standards anwenden (Pflicht!)</h3>
+      <p>Ein gutes Diagramm versteht man <strong>ohne mündliche Erklärung</strong>:</p>
+      <p><span class="chk"></span>aussagekräftiger <strong>Titel</strong> &nbsp; <span class="chk"></span><strong>Achsen beschriften</strong> inkl. Einheit<br>
+         <span class="chk"></span>passender <strong>Diagrammtyp</strong> &nbsp; <span class="chk"></span>sparsame, einheitliche <strong>Farben</strong> &nbsp; <span class="chk"></span>Datenbasis <span class="mono">n =</span> angeben</p>
+      <div class="box tip"><b>So geht's:</b> Diagramm anklicken → <span class="path">Diagrammelemente (＋)</span> → Achsentitel &amp; Diagrammtitel aktivieren und beschriften.</div>
+    </div></div>
+
+    <div class="step"><div class="no">6</div><div class="c">
+      <h3>Export nach PowerPoint</h3>
+      <ol>
+        <li>Diagramm in Excel anklicken → <span class="mono">Strg+C</span>.</li>
+        <li>In PowerPoint auf der Folie → <span class="mono">Strg+V</span> einfügen.</li>
+        <li>Empfehlung: beim Einfügen <strong>„Grafik“</strong> wählen → das Diagramm bleibt stabil, auch ohne die Excel-Datei.</li>
+      </ol>
+    </div></div>
+
+    <div class="box"><strong>Fertig, wenn …</strong> &nbsp;<span class="chk"></span>alle Kennwerte berechnet sind &nbsp; <span class="chk"></span>das Diagramm allen 5 Standards entspricht &nbsp; <span class="chk"></span>ihr eine <strong>Kernaussage in einem Satz</strong> formuliert habt.</div>
+
+  </div>
+  <div class="foot">Anleitung (AB 3 von 3) · Reihe „Daten zum Sprechen bringen“ · Mediennutzungsprojekt.</div>
+</div>
+</body>
+</html>

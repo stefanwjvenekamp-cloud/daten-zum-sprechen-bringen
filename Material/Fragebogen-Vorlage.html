@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fragebogen-Vorlage · Mediennutzung</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0f172a;--soft:#334155;--muted:#64748b;--line:#cbd5e1;--accent:#4f46e5;--accent-soft:#eef2ff;--accent-ink:#3730a3}
+body{font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;background:#e2e8f0;color:var(--ink);line-height:1.5;padding:24px}
+.page{max-width:780px;margin:0 auto 24px;background:#fff;border-radius:10px;box-shadow:0 10px 30px -12px rgba(15,23,42,.25);overflow:hidden}
+.head{border-bottom:3px solid var(--accent);padding:24px 34px 18px}
+.head .kick{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:800}
+.head h1{font-size:24px;margin-top:5px;color:var(--ink)}
+.head p{font-size:13px;color:var(--muted);margin-top:8px}
+.body{padding:18px 34px 26px}
+.q{margin:15px 0;padding-bottom:14px;border-bottom:1px dashed #e2e8f0}
+.q:last-child{border-bottom:none}
+.q .qt{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.q .qt .n{color:var(--accent);margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:7px 20px;font-size:13.5px;color:var(--soft)}
+.opt{display:inline-flex;align-items:center}
+.chk{display:inline-block;width:15px;height:15px;border:1.5px solid #94a3b8;border-radius:3px;margin-right:8px}
+.rad{display:inline-block;width:15px;height:15px;border:1.5px solid #94a3b8;border-radius:50%;margin-right:8px}
+.fill{border-bottom:1.5px solid #94a3b8;display:inline-block;min-width:90px;height:1.15em;vertical-align:-2px}
+.scale{display:flex;gap:18px;align-items:center;font-size:13px;color:var(--muted)}
+.scale .s{display:inline-flex;flex-direction:column;align-items:center;gap:4px;color:var(--soft)}
+.scale .rad{margin:0}
+.hint{font-size:12px;color:var(--muted);font-style:italic;margin-top:4px}
+.note{background:var(--accent-soft);border:1px solid #c7d2fe;border-radius:8px;padding:11px 14px;font-size:12.5px;color:var(--accent-ink);margin:6px 0 14px}
+.foot{padding:14px 34px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);text-align:center}
+.printbtn{position:fixed;top:16px;right:16px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 15px;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px -6px rgba(79,70,229,.6);z-index:50}
+.printbtn:hover{background:#4338ca}
+@media print{body{background:#fff;padding:0}.page{box-shadow:none;border-radius:0;max-width:none;margin:0}.printbtn{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:14mm}.q{break-inside:avoid}}
+</style>
+</head>
+<body>
+<button class="printbtn" onclick="window.print()">🖨 Drucken / als PDF</button>
+<div class="page">
+  <div class="head">
+    <div class="kick">Fragebogen · anonym</div>
+    <h1>Mediennutzung in unserer Klasse</h1>
+    <p>Danke für deine Teilnahme! Der Fragebogen ist <strong>anonym</strong> – bitte keinen Namen eintragen. Bitte ehrlich und nur ein Kreuz pro Frage (außer es steht „Mehrfach“).</p>
+  </div>
+  <div class="body">
+    <div class="note">Hinweis für die Auswertung: Diese Vorlage ist ein Beispiel. Eure eigenen Fragen aus AB&nbsp;2 könnt ihr ergänzen oder ersetzen.</div>
+
+    <div class="q"><div class="qt"><span class="n">1.</span>Wie viele <strong>Minuten</strong> hast du gestern dein Smartphone genutzt? (Bildschirmzeit)</div>
+      <div class="opts"><span class="fill" style="min-width:120px"></span> &nbsp;Minuten</div>
+      <div class="hint">Tipp: Wert aus „Bildschirmzeit“ / „Digital Wellbeing“ ablesen.</div></div>
+
+    <div class="q"><div class="qt"><span class="n">2.</span>Womit verbringst du davon am <strong>meisten</strong> Zeit? (1 Kreuz)</div>
+      <div class="opts">
+        <span class="opt"><span class="rad"></span>Soziale Medien</span>
+        <span class="opt"><span class="rad"></span>Video/Streaming</span>
+        <span class="opt"><span class="rad"></span>Spiele</span>
+        <span class="opt"><span class="rad"></span>Musik</span>
+        <span class="opt"><span class="rad"></span>Schule/Recherche</span>
+      </div></div>
+
+    <div class="q"><div class="qt"><span class="n">3.</span>Welches Gerät nutzt du <strong>überwiegend</strong>?</div>
+      <div class="opts">
+        <span class="opt"><span class="rad"></span>Handy</span>
+        <span class="opt"><span class="rad"></span>Tablet</span>
+        <span class="opt"><span class="rad"></span>PC/Laptop</span>
+        <span class="opt"><span class="rad"></span>Konsole</span>
+      </div></div>
+
+    <div class="q"><div class="qt"><span class="n">4.</span>Wie oft schaust du pro Stunde ungefähr aufs Handy?</div>
+      <div class="opts">
+        <span class="opt"><span class="rad"></span>0–2 mal</span>
+        <span class="opt"><span class="rad"></span>3–5 mal</span>
+        <span class="opt"><span class="rad"></span>6–10 mal</span>
+        <span class="opt"><span class="rad"></span>mehr als 10 mal</span>
+      </div></div>
+
+    <div class="q"><div class="qt"><span class="n">5.</span>An welchen Tagen nutzt du Medien mehr?</div>
+      <div class="opts">
+        <span class="opt"><span class="rad"></span>Schultag</span>
+        <span class="opt"><span class="rad"></span>Wochenende</span>
+        <span class="opt"><span class="rad"></span>etwa gleich</span>
+      </div></div>
+
+    <div class="q"><div class="qt"><span class="n">6.</span>Nutzt du dein Handy in den <strong>letzten 30 Minuten</strong> vor dem Einschlafen?</div>
+      <div class="opts">
+        <span class="opt"><span class="rad"></span>ja, fast immer</span>
+        <span class="opt"><span class="rad"></span>manchmal</span>
+        <span class="opt"><span class="rad"></span>nein</span>
+      </div></div>
+
+    <div class="q"><div class="qt"><span class="n">7.</span>„Ich nutze digitale Medien <strong>zu viel</strong>.“ – Wie sehr stimmst du zu?</div>
+      <div class="scale">
+        <span class="s"><span class="rad"></span>1</span><span class="s"><span class="rad"></span>2</span><span class="s"><span class="rad"></span>3</span><span class="s"><span class="rad"></span>4</span><span class="s"><span class="rad"></span>5</span>
+        <span style="margin-left:6px">1 = stimme gar nicht zu · 5 = stimme voll zu</span>
+      </div></div>
+
+    <div class="q"><div class="qt"><span class="n">8.</span>Was würdest du an deiner Mediennutzung gern ändern? <span style="font-weight:400;color:var(--muted)">(optional, ein Satz)</span></div>
+      <div class="opts"><span class="fill" style="min-width:100%;display:block;margin-top:4px"></span></div></div>
+
+  </div>
+  <div class="foot">Vielen Dank! · Bitte den ausgefüllten Bogen bei deiner Projektgruppe abgeben.</div>
+</div>
+</body>
+</html>
