@@ -863,6 +863,33 @@ print(pstdev(werte))           <span class="cm"># 57.3…  = STABW.N (n)</span><
     next();
   });
 
+  // optionale Handy-Fernbedienung (nur aktiv mit ?remote=1, gestartet über fernbedienung.py)
+  (function(){
+    if(location.protocol !== "http:") return;
+    if(new URLSearchParams(location.search).get("remote") !== "1") return;
+    var seq = 0, sentPage = -1;
+    hint.innerHTML = "📱 Fernbedienung aktiv&nbsp;·&nbsp;<b>S</b> Notizen&nbsp;·&nbsp;<b>F</b> Vollbild";
+    function poll(){
+      var url = "poll?since=" + seq;
+      if(current !== sentPage){
+        var n = slides[current].querySelector(".notes");
+        url += "&page=" + (current+1) + "&total=" + slides.length +
+               "&notes=" + encodeURIComponent(n ? n.textContent.replace(/\s+/g," ").trim() : "");
+        sentPage = current;
+      }
+      fetch(url).then(function(r){ return r.json(); }).then(function(d){
+        seq = d.seq;
+        d.cmds.forEach(function(c){
+          if(c === "next") next();
+          else if(c === "prev") prev();
+          else if(c === "home") go(0, false);
+          else if(c === "end") go(slides.length - 1, true);
+        });
+      }).catch(function(){});
+    }
+    setInterval(poll, 300);
+  })();
+
   // hide hint after a moment
   setTimeout(function(){ hint.classList.add("fade"); }, 6000);
 

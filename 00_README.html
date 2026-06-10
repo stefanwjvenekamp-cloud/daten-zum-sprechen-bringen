@@ -49,6 +49,7 @@ th{background:var(--accent-soft);color:var(--accent-ink)}
       <tr><td class="file">00_README.html</td><td>Diese Anleitung.</td></tr>
       <tr><td class="file">01_Praesentation.html</td><td><strong>Der Vortrag</strong> (17 Folien + 5 Anhangsfolien) mit eingebauten Sprechernotizen.</td></tr>
       <tr><td class="file">02_Handout.html</td><td>Kompakt-Handout zum Austeilen/Teilen mit dem Kollegium.</td></tr>
+      <tr><td class="file">fernbedienung.py</td><td>Handy als Fernbedienung + Notizen-Anzeige (lokaler Mini-Server, nur Python-Standardbibliothek).</td></tr>
       <tr><td class="file">Material/AB1_Excel-Grundlagen.html</td><td>Arbeitsblatt für die Schülerinnen und Schüler: Zelllogik, Bezüge, Formeln, Kennwerte.</td></tr>
       <tr><td class="file">Material/AB2_Fragebogen-Entwicklung.html</td><td>Arbeitsblatt: Grundlagen + Auftrag, eigene Fragebogen-Items zu entwickeln.</td></tr>
       <tr><td class="file">Material/Fragebogen-Vorlage.html</td><td>Fertiger, druckbarer Beispiel-Fragebogen „Mediennutzung“.</td></tr>
@@ -66,7 +67,8 @@ th{background:var(--accent-soft);color:var(--accent-ink)}
       <tr><td><kbd>P</kbd></td><td>Druck-/Übersichtsansicht (alle Folien untereinander) → <kbd>Strg/Cmd</kbd>+<kbd>P</kbd> = als PDF speichern</td></tr>
       <tr><td><kbd>Pos1</kbd> / <kbd>Ende</kbd></td><td>erste / letzte Folie</td></tr>
     </table>
-    <div class="box"><strong>Tipp für den Beamer:</strong> Laptop anschließen, Browser auf den Beamer ziehen, <kbd>F</kbd> für Vollbild. Die Sprechernotizen (<kbd>S</kbd>) erscheinen unten – ideal, wenn du den Laptopbildschirm gespiegelt siehst. (Für echte „Referentenansicht“ auf zwei Schirmen ggf. die PDF-Notizen separat öffnen.)</div>
+    <div class="box"><strong>Tipp für den Beamer:</strong> Laptop anschließen, Browser auf den Beamer ziehen, <kbd>F</kbd> für Vollbild. Die Sprechernotizen (<kbd>S</kbd>) erscheinen unten – ideal, wenn du den Laptopbildschirm gespiegelt siehst.</div>
+    <div class="box good"><strong>📱 Handy als Fernbedienung (optional):</strong> Laptop und Handy ins selbe WLAN bringen – am zuverlässigsten über den <strong>Hotspot des Handys</strong> (Internet ist nicht nötig). Dann im Kolloquium-Ordner <span class="mono">python3 fernbedienung.py</span> starten: Das Terminal zeigt zwei Adressen. Die <strong>Präsentations-Adresse am Laptop</strong> öffnen, die <strong><span class="mono">/remote</span>-Adresse am Handy</strong> – dort erscheinen große Weiter/Zurück-Tasten, die Foliennummer und die <strong>Sprechernotizen der aktuellen Folie</strong> (Referentenansicht in der Hand). macOS fragt beim ersten Start ggf. nach Netzwerk-Erlaubnis → „Erlauben“. <em>Plan B ohne Laptop/Python: Jeder USB-Presenter funktioniert sofort – die Präsentation reagiert auf Bild-auf/Bild-ab.</em></div>
 
     <h2>Status der Anpassungen</h2>
     <div class="box good"><strong>Schon eingepflegt:</strong> Geschwister-Scholl-Gymnasium Berenbostel · 2 Computerräume à 30 Windows-PCs · 28 Schülerinnen und Schüler, Jg. 10 · 5–6 Doppelstunden · Notengewichtung 30 % schriftlich / 70 % mündlich-fachpraktisch · KC-Einordnung über alle <strong>vier Lernfelder</strong> (Folie 4) · Denkmodell „Zelle = Variable“ (Folie 8) · kritische Datenebene (Folie 13) · Algorithmik-Brücke Excel ↔ Python (Anhang Folie 21).</div>
