@@ -93,7 +93,7 @@
   .ph-step.focus{background:var(--accent);border-color:var(--accent)}
   .ph-step.focus .n{color:#c7d2fe}
   .ph-step.focus .t{color:#fff}
-  .focus-band{margin-top:16px;display:inline-flex;align-items:center;gap:10px;background:var(--accent-soft);border:1px solid #c7d2fe;color:var(--accent-ink);font-weight:700;padding:10px 16px;border-radius:10px;font-size:15px}
+  .focus-band{margin-top:16px;display:inline-block;background:var(--accent-soft);border:1px solid #c7d2fe;color:var(--accent-ink);font-weight:700;padding:10px 16px;border-radius:10px;font-size:15px;line-height:1.5}
 
   /* tables */
   table{width:100%;border-collapse:collapse;font-size:clamp(13px,1.5vw,17px);background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
@@ -402,7 +402,7 @@
             <tr><td>Spannweite</td><td class="code">=MAX(B2:B11)-MIN(B2:B11)</td><td class="res">210</td></tr>
             <tr><td>Standardabw.</td><td class="code">=STABW.S(B2:B11)</td><td class="res">≈ 60</td></tr>
           </table>
-          <div class="focus-band step" style="margin-top:16px">Deutung: <strong>Ø 180 min = 3 Stunden/Tag</strong> – aber große Streuung (σ ≈ 60 min). Die Zahl <em>und</em> ihre Streuung erzählen die Geschichte.</div>
+          <div class="focus-band step" style="margin-top:16px">Deutung: <strong>Ø 180 min = 3 Stunden/Tag</strong> – aber große Streuung (s ≈ 60 min). Die Zahl <em>und</em> ihre Streuung erzählen die Geschichte.</div>
         </div>
       </div>
     </div>
@@ -433,7 +433,7 @@
         </ul>
       </div>
     </div>
-    <aside class="notes">Phase 4 – die Phase, die man im Plan immer zu kurz ansetzt (siehe später „Was ich ändern würde“). Wichtiger Lernmoment: Datenqualität entscheidet über die Aussagekraft. Knüpft direkt an die Stolperstein-Folie an.</aside>
+    <aside class="notes">Phase 4 – die Phase, die man im Plan immer zu kurz ansetzt (siehe später „Was ich ändern würde“). Wichtiger Lernmoment: Datenqualität entscheidet über die Aussagekraft. Knüpft direkt an die Stolperstein-Folie an. Diagnose-Trick: <span class="mono">=ANZAHL2(…)-ANZAHL(…)</span> zählt genau die Einträge, die keine Zahlen sind (z. B. „2h“).</aside>
   </section>
 
   <!-- 11 VISUALISIERUNG -->
@@ -519,7 +519,6 @@
         <div class="card accentcard" style="margin-top:10px">
           <p style="font-size:clamp(17px,2vw,22px);color:var(--ink)">„<strong>Soziale Medien dominieren</strong> die Bildschirmzeit unserer Klasse – fast so viel wie Video und Spiele zusammen.“</p>
         </div>
-        <p class="muted step" style="margin-top:14px;font-size:15px"><span class="ph">Hier ggf. ein echtes, anonymisiertes Diagramm einer Gruppe einsetzen.</span></p>
       </div>
     </div>
     <aside class="notes">Sichtbar machen, was am Ende herauskommt: ein sauberes Diagramm <strong>plus eine sprachlich klare Aussage</strong>. Genau hier zahlt sich die Standard-Checkliste aus. Wenn vorhanden: echtes (anonymisiertes) Produkt zeigen – das überzeugt das Kollegium am meisten.</aside>
@@ -621,7 +620,7 @@
             <li class="step"><strong>Excel-Startdatei</strong> mit fertigen Spaltenköpfen vorgeben</li>
             <li class="step">pro Gruppe einen „Datenmanager“ (Datei-Organisation)</li>
             <li class="step">die <strong>kritische Datenebene</strong> (Aussagekraft, Datenschutz) vom Unterrichtsgespräch zur eigenen Stunde ausbauen</li>
-            <li class="step">zum Abschluss die <strong>Brücke zur Algorithmik</strong> schlagen – dieselbe Auswertung in fünf Zeilen Python zeigen</li>
+            <li class="step">zum Abschluss die <strong>Brücke zur Algorithmik</strong> schlagen – dieselbe Auswertung in wenigen Zeilen Python zeigen (Anhang)</li>
           </ul>
         </div>
       </div>
@@ -722,7 +721,8 @@
           <tr><td>Standardabweichung</td><td class="code">=STABW.S(B2:B11)</td></tr>
           <tr><td>Varianz</td><td class="code">=VAR.S(B2:B11)</td></tr>
           <tr><td>Median</td><td class="code">=MEDIAN(B2:B11)</td></tr>
-          <tr><td>Anzahl (gefüllt)</td><td class="code">=ANZAHL(B2:B11)</td></tr>
+          <tr><td>Anzahl (Zahlen)</td><td class="code">=ANZAHL(B2:B11)</td></tr>
+          <tr><td>Anzahl (gefüllte Zellen)</td><td class="code">=ANZAHL2(B2:B11)</td></tr>
           <tr><td>Ausbaustufe: zählen mit <strong>Bedingung</strong></td><td class="code">=ZÄHLENWENN(C2:C29;"Video")</td></tr>
         </table>
       </div>
@@ -740,26 +740,30 @@
       <div class="split" style="align-items:start">
         <div>
           <table style="font-size:14px">
-            <tr><th>In Excel</th><th>In Python (pandas)</th></tr>
-            <tr><td class="code">=MITTELWERT(B2:B29)</td><td class="code">df["Minuten"].mean()</td></tr>
-            <tr><td class="code">=MAX(…)-MIN(…)</td><td class="code">….max() - ….min()</td></tr>
-            <tr><td class="code">=ZÄHLENWENN(C:C;"Video")</td><td class="code">(df["Kategorie"]=="Video").sum()</td></tr>
-            <tr><td>Diagramm per Klick</td><td class="code">….plot.bar()</td></tr>
+            <tr><th>In Excel</th><th>In Python</th></tr>
+            <tr><td class="code">=MITTELWERT(B2:B11)</td><td class="code">mean(werte)</td></tr>
+            <tr><td class="code">=MAX(…)-MIN(…)</td><td class="code">max(werte) - min(werte)</td></tr>
+            <tr><td class="code">=STABW.S(…) · =STABW.N(…)</td><td class="code">stdev(werte) · pstdev(werte)</td></tr>
+            <tr><td class="code">=ZÄHLENWENN(C:C;"Video")</td><td class="code">kategorien.count("Video")</td></tr>
+            <tr><td>ganze Tabelle &amp; Diagramm</td><td>pandas: <span class="mono">groupby → mean → plot.bar()</span></td></tr>
           </table>
-          <p class="muted" style="font-size:14.5px;margin-top:12px">Tabellenkalkulation ist <strong>ein Denkmodell unter mehreren</strong> – die Konzepte (Variable, Rechenvorschrift, Bedingung) tragen bis in die Programmierung.</p>
+          <p class="muted" style="font-size:14.5px;margin-top:12px">Das Beispiel rechts nutzt nur die <strong>Standardbibliothek</strong> (Modul <span class="mono">statistics</span>) – läuft ohne Installation und ist anschlussfähig an die textbasierte Programmierung der Oberstufe. Tabellenkalkulation bleibt <strong>ein Denkmodell unter mehreren</strong>.</p>
         </div>
         <div>
-          <pre class="codeblock"><span class="cm"># gleiche Kennwerte, gleiches Diagramm:</span>
-import pandas as pd
-df = pd.read_csv("umfrage.csv")
-print(df["Minuten"].mean())
-print(df["Minuten"].max() - df["Minuten"].min())
-df.groupby("Kategorie")["Minuten"].mean().plot.bar()</pre>
-          <p class="muted" style="font-size:14.5px;margin-top:12px"><strong>Fünf Zeilen Python</strong> – und werkzeugneutral gedacht: Die Reihe läuft genauso mit dem freien <strong>LibreOffice Calc</strong>.</p>
+          <pre class="codeblock"><span class="cm"># die Werte der Kennwerte-Folie:</span>
+from statistics import mean, stdev, pstdev
+werte = [90, 120, 150, 150, 165,
+         180, 195, 210, 240, 300]
+
+print(mean(werte))             <span class="cm"># 180    = MITTELWERT</span>
+print(max(werte) - min(werte)) <span class="cm"># 210    = Spannweite</span>
+print(stdev(werte))            <span class="cm"># 60.4…  = STABW.S (n−1)</span>
+print(pstdev(werte))           <span class="cm"># 57.3…  = STABW.N (n)</span></pre>
+          <p class="muted" style="font-size:14.5px;margin-top:12px"><strong>Exakt die Zahlen der Kennwerte-Folie</strong> – und <span class="mono">stdev</span>/<span class="mono">pstdev</span> macht die Frage „Stichprobe oder Grundgesamtheit?“ (n−1 vs. n) im Code sichtbar.</p>
         </div>
       </div>
     </div>
-    <aside class="notes">Reservefolie für die Rückfrage „Wo bleibt die Algorithmik?“: Die Reihe selbst bleibt bewusst im Lernfeld „Daten und ihre Spuren“ – aber sie ist <strong>anschlussfähig</strong>. Fachlicher Kontrast: Tabellenblatt = <strong>deklarativ</strong> (Beziehungen beschreiben, die Engine bestimmt die Reihenfolge), Python-Skript = <strong>imperativ</strong> (Schritte in fester Folge) – zwei Paradigmen, ein Problem. Option für den nächsten Durchgang: diese Gegenüberstellung als 10-Minuten-Ausblick in der letzten Stunde (siehe Reflexion). Gleichzeitig das Argument zur Werkzeugfrage: Konzepte statt Produkt – Excel, Calc oder Python sind austauschbare Träger derselben Ideen.</aside>
+    <aside class="notes">Reservefolie für die Rückfrage „Wo bleibt die Algorithmik?“: Die Reihe selbst bleibt bewusst im Lernfeld „Daten und ihre Spuren“ – aber sie ist <strong>anschlussfähig</strong>. Bewusst die <strong>Standardbibliothek</strong> mit den echten Folie-9-Werten: ohne Installation nachvollziehbar, exakt dieselben Ergebnisse – inklusive der STABW.S/N-Frage (<span class="mono">stdev</span>/<span class="mono">pstdev</span>). Fachlicher Kontrast: Tabellenblatt = <strong>deklarativ</strong> (Beziehungen beschreiben, die Engine bestimmt die Reihenfolge), Python-Skript = <strong>imperativ</strong> (Schritte in fester Folge) – zwei Paradigmen, ein Problem. Profi-Ausblick pandas: ganze Tabelle laden, gruppieren, Diagramm. Werkzeugargument: Excel, Calc oder Python – austauschbare Träger derselben Ideen.</aside>
   </section>
 
   <!-- 22 ANHANG PHASENPLAN -->
