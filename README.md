@@ -11,7 +11,7 @@ Alle Dateien sind eigenständige HTML-Seiten und laufen offline im Browser – k
 | Datei | Inhalt |
 |---|---|
 | `index.html` | Landingpage mit allen Links |
-| `01_Praesentation.html` | Der Vortrag (20 Folien + Anhang, mit Sprechernotizen) |
+| `01_Praesentation.html` | Der Vortrag (17 Folien + 5 Anhangsfolien, mit Sprechernotizen) |
 | `02_Handout.html` | Kompakt-Handout fürs Kollegium |
 | `00_README.html` | Bedienung, Tastenkürzel, Pflichtaspekt-Übersicht |
 | `Material/AB1_Excel-Grundlagen.html` | Arbeitsblatt: Zelllogik, Bezüge, Formeln, Kennwerte |

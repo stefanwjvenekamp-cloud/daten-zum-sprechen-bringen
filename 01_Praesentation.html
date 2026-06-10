@@ -109,6 +109,13 @@
   .tagline{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.06em;padding:4px 10px;border-radius:7px}
   .tagline.good{background:var(--good-soft);color:#065f46}
   .tagline.bad{background:var(--bad-soft);color:#991b1b}
+  .tagline.acc{background:var(--accent-soft);color:var(--accent-ink)}
+  .tagline.warn{background:var(--warn-soft);color:#92400e}
+  .tagline.mut{background:#f1f5f9;color:#475569}
+
+  /* code block */
+  .codeblock{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:18px 22px;font-family:"Consolas",ui-monospace,monospace;font-size:clamp(13px,1.5vw,16.5px);line-height:1.65;box-shadow:var(--shadow);overflow:auto;white-space:pre}
+  .codeblock .cm{color:#94a3b8}
 
   /* charts */
   .chartbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
@@ -184,9 +191,9 @@
       <div class="grid g2" style="gap:14px 40px">
         <ul class="bul">
           <li class="step"><strong>Rahmen</strong> – Schule, Ausstattung, Lerngruppe</li>
-          <li class="step"><strong>Einordnung</strong> in das Kerncurriculum Informatik</li>
+          <li class="step"><strong>Einordnung</strong> ins Kerncurriculum – vier Lernfelder</li>
           <li class="step"><strong>Die Unterrichtsreihe</strong> im Überblick</li>
-          <li class="step"><strong>Schwerpunkt</strong> – von echten Daten zur Aussage</li>
+          <li class="step"><strong>Schwerpunkt</strong> – von echten Daten zur Aussage und ihren Grenzen</li>
         </ul>
         <ul class="bul">
           <li class="step"><strong>Stolpersteine</strong> &amp; konkrete Lösungen</li>
@@ -243,31 +250,31 @@
   <section class="slide" data-tag="Kerncurriculum">
     <div class="wrap">
       <p class="kicker">Bezug zum Kerncurriculum Informatik Sek I (Niedersachsen, 2014)</p>
-      <h2>Verankerung im Curriculum</h2>
+      <h2>Vier Lernfelder – ehrlich verortet</h2>
       <div class="rule"></div>
-      <div class="grid g2">
-        <div class="card"><h3>Lernfeld „Daten und ihre Spuren“</h3>
-          <p style="margin-bottom:8px"><strong>Modul „Verwaltung von Daten“ (Basis):</strong></p>
-          <ul class="bul" style="gap:7px">
-            <li>Tabellen mit einer <strong>Tabellenkalkulation</strong> erstellen</li>
-            <li>Informationen aus Daten gewinnen (Filtern, Sortieren)</li>
-            <li>Daten als <strong>Diagramme</strong> grafisch darstellen</li>
-          </ul>
-          <div class="chips"><span class="chip">P1.3</span><span class="chip">P3.2</span><span class="chip">P4.2</span><span class="chip">P5.1</span><span class="chip">I1.3</span></div>
+      <div class="grid g2" style="gap:14px">
+        <div class="card" style="border-top:4px solid var(--accent)">
+          <h3>„Daten und ihre Spuren“ <span class="tagline acc">KERN DER REIHE</span></h3>
+          <p>Modul <strong>„Verwaltung von Daten“</strong> (Basis): Tabellen erstellen · Informationen gewinnen · Diagramme darstellen. Dazu aus „Datenschutz und Datensicherheit“: <strong>anonyme Erhebung</strong>, Umgang mit persönlichen Daten.</p>
+          <div class="chips"><span class="chip">P1.3</span><span class="chip">P3.2</span><span class="chip">P4.2</span><span class="chip">P5.1</span><span class="chip">I1.3</span><span class="chip">I4.4</span></div>
         </div>
-        <div class="card"><h3>Inhaltlich: Information &amp; Darstellung</h3>
-          <ul class="bul" style="gap:7px">
-            <li><strong>I1.1</strong> Information vs. Repräsentation durch Daten</li>
-            <li><strong>I1.3</strong> Daten mit geeigneten Werkzeugen organisieren</li>
-            <li><strong>I1.4</strong> geeignete Darstellungsform wählen</li>
-          </ul>
-          <p style="margin-top:12px;margin-bottom:6px"><strong>Modul „Präsentation“ (Computerkompetenz):</strong> zielgruppenorientiert präsentieren</p>
-          <div class="chips"><span class="chip alt">P2.3</span><span class="chip alt">P3.3</span><span class="chip alt">P3.4</span><span class="chip alt">I3.4</span></div>
+        <div class="card step">
+          <h3>„Computerkompetenz“ <span class="tagline good">MITGENOMMEN</span></h3>
+          <p>Modul „Präsentation“: Ergebnisse zielgruppenorientiert präsentieren (→ PowerPoint). Bewusst in <strong>dienender Rolle</strong> – Bedienkompetenz ist hier Mittel, nicht Ziel.</p>
+          <div class="chips"><span class="chip alt">P2.3</span><span class="chip alt">I3.4</span></div>
+        </div>
+        <div class="card step">
+          <h3>„Algorithmisches Problemlösen“ <span class="tagline warn">ANGEBAHNT</span></h3>
+          <p>Zelle = <strong>Variable</strong>, Formel = <strong>Rechenvorschrift</strong>, Bezüge = <strong>Abstraktion</strong>. Ausbaustufe: Bedingungen (<span class="mono">ZÄHLENWENN</span>) und dieselbe Auswertung in Python (→ Anhang).</p>
+        </div>
+        <div class="card step soft">
+          <h3>„Automatisierte Prozesse“ <span class="tagline mut">EIGENE REIHE</span></h3>
+          <p>Bewusst <strong>nicht</strong> Gegenstand dieser Einheit – das Lernfeld erhält im schuleigenen Arbeitsplan eigene Unterrichtsreihen.</p>
         </div>
       </div>
-      <p class="step" style="margin-top:18px"><span class="tagline good">Bonus</span> &nbsp;Über das Thema <strong>Mediennutzung</strong> ergibt sich ein Anknüpfungspunkt an <strong>I4.1</strong> – Auswirkungen von Informatiksystemen auf den Alltag reflektieren.</p>
+      <p class="step" style="margin-top:16px"><span class="tagline good">KC-Leitplanke</span> &nbsp;„Ein <strong>breiter Überblick</strong> […] ist wichtiger als eine Spezialisierung in einzelnen Modulen“ (KC, S. 15) – die Reihe füllt darum gezielt <strong>ein</strong> Lernfeld und bleibt ein Baustein unter mehreren im Schuljahr.</p>
     </div>
-    <aside class="notes">Pflichtaspekt 8. Kernbotschaft: Das Projekt trifft das KC nicht nur am Rande, sondern liegt <strong>genau im Modul „Verwaltung von Daten“</strong> und verbindet es sauber mit dem Modul „Präsentation“. Die Kompetenz-Codes nur kurz zeigen – Details liegen im Anhang für Rückfragen.</aside>
+    <aside class="notes">Pflichtaspekt 8 – als ehrliche Landkarte über alle <strong>vier Lernfelder</strong>. Kernbotschaft: Die Reihe sitzt voll im Lernfeld „Daten und ihre Spuren“ (Modul „Verwaltung von Daten“) und nimmt den Datenschutz gleich mit. Auf die Rückfrage „nur eines von vier Lernfeldern?“: Ja, bewusst – das KC verlangt die Auswahl im <strong>schuleigenen Arbeitsplan</strong>; seit Informatik Pflichtfach ist (Jg. 10 ab 2023/24, eine Wochenstunde), zählt der breite Überblick übers Schuljahr, nicht innerhalb jeder einzelnen Reihe. Kompetenz-Codes im Detail: Anhang.</aside>
   </section>
 
   <!-- 5 REIHE -->
@@ -329,38 +336,43 @@
         <div class="ph-step focus"><div class="t" style="color:#fff">Berechnen</div></div>
         <div class="ph-step focus"><div class="t" style="color:#fff">Visualisieren</div></div>
         <div class="ph-step focus"><div class="t" style="color:#fff">Präsentieren</div></div>
+        <div class="ph-step focus"><div class="t" style="color:#fff">Hinterfragen</div></div>
       </div>
-      <p class="lead step" style="margin-top:28px;max-width:760px;margin-left:auto;margin-right:auto">Der rote Faden des Schwerpunkts – jede Station ist zugleich ein Stück <strong>Datenkompetenz</strong>.</p>
+      <p class="lead step" style="margin-top:28px;max-width:760px;margin-left:auto;margin-right:auto">Der rote Faden des Schwerpunkts – jede Station ist zugleich ein Stück <strong>Datenkompetenz</strong>, bis zur Frage, was die Daten <em>nicht</em> sagen.</p>
     </div>
-    <aside class="notes">Übergang in den Kern. Diese fünf Stationen strukturieren die nächsten Minuten. Klarmachen: Wir arbeiten mit den <strong>selbst erhobenen</strong> Klassendaten – das ist der Unterschied zu fertigen Übungsdatensätzen.</aside>
+    <aside class="notes">Übergang in den Kern. Diese sechs Stationen strukturieren die nächsten Minuten. Klarmachen: Wir arbeiten mit den <strong>selbst erhobenen</strong> Klassendaten – das ist der Unterschied zu fertigen Übungsdatensätzen. Die letzte Station „Hinterfragen“ betont: Die Reihe endet nicht beim Diagramm, sondern bei der Aussagekraft (eigene Folie).</aside>
   </section>
 
   <!-- 8 EXCEL GRUNDLAGEN -->
   <section class="slide" data-tag="Excel-Logik">
-    <div class="split">
-      <div>
-        <p class="kicker">Phase 0 · das mentale Modell</p>
-        <h2>Die Denklogik von Excel</h2>
-        <div class="rule"></div>
-        <ul class="bul">
-          <li class="step">Das <strong>Tabellenraster</strong>: jede Zelle hat eine <strong>eindeutige Adresse</strong> aus Spalte + Zeile → <span class="mono">B2</span></li>
-          <li class="step"><strong>Bezüge</strong> statt Zahlen: <span class="mono">=A1+B1</span> rechnet mit Positionen, nicht mit Werten</li>
-          <li class="step"><strong>relativ vs. absolut</strong>: <span class="mono">B2</span> wandert beim Kopieren, <span class="mono">$B$2</span> bleibt fest</li>
-          <li class="step"><strong>Shortcuts</strong>: Ausfüllkästchen (1,2,3 …), <span class="mono">Strg</span>+Pfeil, <span class="mono">Strg</span>+Z</li>
-        </ul>
+    <div class="wrap">
+      <p class="kicker">Phase 0 · das mentale Modell</p>
+      <h2>Die Denklogik der Tabellenkalkulation</h2>
+      <div class="rule"></div>
+      <div class="split" style="align-items:start">
+        <div>
+          <ul class="bul">
+            <li class="step">Jede Zelle ist eine <strong>Variable</strong>: die Adresse <span class="mono">B2</span> ist ihr Name, <span class="mono">95</span> ihr aktueller Wert</li>
+            <li class="step">Eine <strong>Formel</strong> ist eine gespeicherte <strong>Rechenvorschrift</strong>: <span class="mono">=B2/60</span> beschreibt einen Zusammenhang – kein einmaliges Ergebnis</li>
+            <li class="step"><strong>Automatische Neuberechnung</strong>: ändert sich ein Wert, rechnet Excel alle abhängigen Zellen nach – es löst den <strong>Datenfluss</strong> selbst auf</li>
+            <li class="step"><strong>relativ vs. absolut</strong> (<span class="mono">B2</span> / <span class="mono">$B$2</span>): beim Kopieren wird ein <strong>Muster abstrahiert</strong> – eine Vorschrift, viele Zeilen</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="font-size:18px">Die informatische Brille</h3>
+          <table style="box-shadow:none;font-size:14.5px">
+            <tr><th>In Excel</th><th>Dahinter steckt</th></tr>
+            <tr><td class="mono">B2 = 95</td><td><strong>Variable</strong> mit Name und Wert</td></tr>
+            <tr><td class="mono">=B2/60</td><td><strong>Rechenvorschrift</strong> (Funktion)</td></tr>
+            <tr><td>Neuberechnung</td><td>automatische <strong>Ausführung</strong></td></tr>
+            <tr><td class="mono">B2 → B3 → B4 …</td><td><strong>Abstraktion</strong> über ein Muster</td></tr>
+          </table>
+          <p class="muted" style="font-size:14.5px;margin-top:12px">Wer das verstanden hat, bedient nicht nur Excel – er nutzt ein <strong>deklaratives Programmiermodell</strong>.</p>
+        </div>
       </div>
-      <div class="card">
-        <h3 style="font-size:18px">Mini-Beispiel: Adressierung</h3>
-        <table style="box-shadow:none;font-size:15px">
-          <tr><th style="width:46px"></th><th>A · Name</th><th>B · Minuten</th></tr>
-          <tr><td class="mono">1</td><td>Lina</td><td class="mono">120</td></tr>
-          <tr><td class="mono">2</td><td>Ben</td><td class="mono">95</td></tr>
-          <tr><td class="mono">3</td><td>…</td><td class="mono">…</td></tr>
-        </table>
-        <p class="muted" style="font-size:14.5px;margin-top:12px">„Zelle <span class="mono">B2</span>“ = Spalte B, Zeile 2 = <strong>95</strong>. Diese eindeutige Zuordnung ist der Kern – wer sie verstanden hat, versteht Tabellenkalkulation.</p>
-      </div>
+      <div class="focus-band step" style="margin-top:18px">Ein Tabellenblatt ist ein kleines <strong>deklaratives Programm</strong>: Wir beschreiben <strong>Beziehungen, nicht Abläufe</strong> – und das produktunabhängig: in Excel genauso wie im freien LibreOffice Calc.</div>
     </div>
-    <aside class="notes">Nicht Klick-Tutorial, sondern <strong>Konzept</strong>: die explizite Zuordnung von Position im Datenraster. „Excel rechnet mit Adressen, nicht mit Zahlen.“ Relativ/absolut hier nur kurz anreißen – kommt bei den Stolpersteinen wieder.</aside>
+    <aside class="notes">Merksatz: <strong>„Excel rechnet mit Adressen, nicht mit Zahlen.“</strong> Die Antwort auf den Einwand „Office-Schulung“: Phase 0 macht das <strong>Konzeptmodell</strong> explizit – Zelle = Variable, Formel = Rechenvorschrift, Neuberechnung = die Engine wertet die Abhängigkeiten aus („ändere ich B2, rechnet alles Abhängige von selbst neu“). Live-Moment im Unterricht: einen Wert ändern und zusehen, wie Kennwerte und Diagramm „mitlaufen“. Bedienung (Shortcuts, Ausfüllkästchen) steht im AB 1 – auf der Folie bewusst nur das Modell. Produktunabhängigkeit ist KC-Auftrag („produktunabhängiges Grundwissen“); LibreOffice Calc als freie Alternative nennen.</aside>
   </section>
 
   <!-- 9 KENNWERTE -->
@@ -394,7 +406,7 @@
         </div>
       </div>
     </div>
-    <aside class="notes">Phase 5. Hier wird Mathematik <strong>begreifbar</strong>, weil es die eigenen Daten sind. Den Bogen spannen: Mittelwert allein genügt nicht – erst die Spannweite/Standardabweichung zeigt, wie unterschiedlich die Klasse ist. <strong>Beispieldaten sind exemplarisch</strong> (anpassen, falls echte Werte gezeigt werden sollen).</aside>
+    <aside class="notes">Phase 5. Hier wird Mathematik <strong>begreifbar</strong>, weil es die eigenen Daten sind. Den Bogen spannen: Mittelwert allein genügt nicht – erst die Spannweite/Standardabweichung zeigt, wie unterschiedlich die Klasse ist. <strong>Beispieldaten sind exemplarisch</strong> (anpassen, falls echte Werte gezeigt werden sollen). Mögliche Prüferfrage: <strong>Warum STABW.S (n−1) und nicht STABW.N (n)?</strong> Bewusste Modellierungsentscheidung: Wir rahmen die Klasse als <strong>Stichprobe</strong> (Einstieg „eigene Stichprobe“, Vergleich mit Jahrgang/JIM-Studie) → S, hier 60,4. Wer die Klasse als abgeschlossene <strong>Grundgesamtheit</strong> liest, nimmt N (hier 57,3). Entscheidend ist, die Wahl begründen zu können.</aside>
   </section>
 
   <!-- 10 BEREINIGEN -->
@@ -513,7 +525,36 @@
     <aside class="notes">Sichtbar machen, was am Ende herauskommt: ein sauberes Diagramm <strong>plus eine sprachlich klare Aussage</strong>. Genau hier zahlt sich die Standard-Checkliste aus. Wenn vorhanden: echtes (anonymisiertes) Produkt zeigen – das überzeugt das Kollegium am meisten.</aside>
   </section>
 
-  <!-- 13 STOLPERSTEINE -->
+  <!-- 13 DATENKRITIK -->
+  <section class="slide" data-tag="Datenkritik">
+    <div class="wrap">
+      <p class="kicker">„Daten und ihre Spuren“ wörtlich genommen</p>
+      <h2>Was sagen unsere Daten – und was nicht?</h2>
+      <div class="rule"></div>
+      <div class="grid g2">
+        <div class="card" style="border-top:4px solid var(--warn)">
+          <h3>Grenzen der Aussagekraft</h3>
+          <ul class="bul" style="gap:9px">
+            <li class="step"><span class="mono">n = 28</span>, eine Klasse: Die Aussagen gelten für <strong>uns</strong> – nicht für „die Jugend“ (Vergleich: JIM-Studie, n ≈ 1200)</li>
+            <li class="step"><strong>Selbstauskunft ≠ Messung</strong> – der Schätz-Effekt aus dem Einstieg kehrt als Methodenfrage zurück</li>
+            <li class="step"><strong>Verzerrung</strong>: Wer gibt ehrlich 6 Stunden an? (soziale Erwünschtheit, Ausreißer)</li>
+          </ul>
+        </div>
+        <div class="card" style="border-top:4px solid var(--accent)">
+          <h3>Datenbewusstsein &amp; Datenschutz</h3>
+          <ul class="bul" style="gap:9px">
+            <li class="step">unsere Umfrage: <strong>anonym, freiwillig, aggregiert</strong> – Datenschutz als eigene Entscheidung erlebt</li>
+            <li class="step">Kontrast: Bildschirmzeit-App &amp; Plattformen erfassen dieselben Daten <strong>automatisch, personenbezogen, dauerhaft</strong></li>
+            <li class="step">Diskussion: „Wer wertet so etwas aus – und wozu?“ (Profile, Werbung, Empfehlungen)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="focus-band step" style="margin-top:18px">Hier wird die Excel-Reihe zur <strong>Datenbildung</strong>: reflektierter Umgang mit Informatiksystemen (KC: I4.1 · I4.4) statt nur sauberer Diagramme.</div>
+    </div>
+    <aside class="notes">Der Hebel des Themas Mediennutzung: Die Klasse hat dieselben Daten einmal <strong>selbst, anonym und mühsam</strong> erhoben – und trägt sie zugleich <strong>automatisch erfasst</strong> im Handy. Dieser Kontrast trägt die Diskussion fast von allein (Einstieg: App-Statistik · Erhebung: Anonymität · Deutung: n = 28). Im ersten Durchgang lief diese Ebene im Unterrichtsgespräch mit – der Ausbau zur eigenen Stunde steht auf der Reflexionsfolie. JIM-Studie = jährliche repräsentative Studie zur Mediennutzung Jugendlicher (12–19 Jahre). Vorbereitet für „Wer wertet so etwas aus?“: Plattformen optimieren Verweildauer, Werbenetzwerke bilden Profile, das Betriebssystem misst Bildschirmzeit – die Reihe macht denselben Vorgang <strong>transparent, anonym und selbstbestimmt</strong>.</aside>
+  </section>
+
+  <!-- 14 STOLPERSTEINE -->
   <section class="slide" data-tag="Stolpersteine">
     <div class="wrap">
       <p class="kicker">Schwierigkeiten – damit andere sie vermeiden</p>
@@ -530,7 +571,7 @@
     <aside class="notes">Pflichtaspekt 5 – für das Kollegium oft der wertvollste Teil. Pro Zeile ein Satz aus eigener Erfahrung. Besonders betonen: <strong>Fragebogen-Design</strong> und <strong>Datenorganisation</strong> haben am meisten Zeit gekostet. Gegenmaßnahmen sind direkt übertragbar.</aside>
   </section>
 
-  <!-- 14 BEWERTUNG -->
+  <!-- 15 BEWERTUNG -->
   <section class="slide" data-tag="Bewertung">
     <div class="split">
       <div>
@@ -558,7 +599,7 @@
     <aside class="notes">Pflichtaspekt 7. Die 30/70-Gewichtung (schriftlich / mündlich-fachpraktisch) ist die reale Notenpraxis der Schule; das Projekt liegt im 70 %-Teil. Die interne Projektgewichtung (40/25/25/10) ist ein Vorschlag. Prozess &amp; Dokumentation zählen laut KC mit; die Reflexion stärkt die Selbsteinschätzung.</aside>
   </section>
 
-  <!-- 15 REFLEXION -->
+  <!-- 16 REFLEXION -->
   <section class="slide" data-tag="Reflexion">
     <div class="wrap">
       <p class="kicker">Rückblick</p>
@@ -579,15 +620,16 @@
             <li class="step">mehr Zeit für die <strong>Datenbereinigung</strong> einplanen</li>
             <li class="step"><strong>Excel-Startdatei</strong> mit fertigen Spaltenköpfen vorgeben</li>
             <li class="step">pro Gruppe einen „Datenmanager“ (Datei-Organisation)</li>
-            <li class="step"><strong>Datenschutz/Anonymisierung</strong> stärker thematisieren</li>
+            <li class="step">die <strong>kritische Datenebene</strong> (Aussagekraft, Datenschutz) vom Unterrichtsgespräch zur eigenen Stunde ausbauen</li>
+            <li class="step">zum Abschluss die <strong>Brücke zur Algorithmik</strong> schlagen – dieselbe Auswertung in fünf Zeilen Python zeigen</li>
           </ul>
         </div>
       </div>
     </div>
-    <aside class="notes">Ehrliche Reflexion wirkt souverän. Die rechte Spalte an deine echten Erfahrungen anpassen. „Mehr Zeit für Bereinigung“ und „Startdatei vorgeben“ sind die wirksamsten Stellschrauben für den nächsten Durchgang.</aside>
+    <aside class="notes">Ehrliche Reflexion wirkt souverän. Die rechte Spalte an deine echten Erfahrungen anpassen. „Mehr Zeit für Bereinigung“ und „Startdatei vorgeben“ sind die wirksamsten Stellschrauben. Die beiden letzten Punkte sind die Antwort auf die KC-Frage nach dem informatischen Kern: Datenkritik als feste Stunde verankern, Algorithmik-Anschluss sichtbar machen (Anhang-Folie).</aside>
   </section>
 
-  <!-- 16 MATERIAL + FAZIT -->
+  <!-- 17 MATERIAL + FAZIT -->
   <section class="slide" data-tag="Material &amp; Fazit">
     <div class="wrap">
       <p class="kicker">Zum Mitnehmen</p>
@@ -607,7 +649,7 @@
           <div class="grid" style="gap:12px">
             <div class="card accentcard step"><strong>1.</strong> Echte, selbst erhobene Daten machen Statistik <strong>begreifbar</strong> und motivieren.</div>
             <div class="card accentcard step"><strong>2.</strong> Visualisierung ist <strong>Handwerk mit Standards</strong> – das lässt sich lehren und prüfen.</div>
-            <div class="card accentcard step"><strong>3.</strong> Datenkompetenz verbindet <strong>Kerncurriculum</strong> und <strong>Lebenswelt</strong>.</div>
+            <div class="card accentcard step"><strong>3.</strong> Informatisch wird die Reihe durch das <strong>Konzept</strong> (Zelle = Variable, Formel = Rechenvorschrift) und den <strong>kritischen Blick</strong> auf Daten – nicht durch die Software.</div>
           </div>
         </div>
       </div>
@@ -616,7 +658,7 @@
     <aside class="notes">Pflichtaspekt 6 (Material als Ideensammlung) plus Abschluss. Auf das Materialpaket verweisen (wird geteilt). Mit den drei Take-aways enden und in die Fragerunde überleiten. Anhangsfolien stehen für Rückfragen bereit.</aside>
   </section>
 
-  <!-- 17 ANHANG KC -->
+  <!-- 18 ANHANG KC -->
   <section class="slide" data-tag="Anhang · KC-Detail">
     <div class="wrap">
       <p class="kicker">Anhang · für Rückfragen</p>
@@ -633,7 +675,7 @@
     <aside class="notes">Reservefolie. Nur bei Nachfrage zeigen. Zeigt, dass die Reihe bewusst auf der Basis-Stufe aufsetzt und in Richtung Vertiefung öffnet.</aside>
   </section>
 
-  <!-- 18 ANHANG FRAGEBOGEN -->
+  <!-- 19 ANHANG FRAGEBOGEN -->
   <section class="slide" data-tag="Anhang · Fragebogen">
     <div class="wrap">
       <p class="kicker">Anhang · für Rückfragen</p>
@@ -661,7 +703,7 @@
     <aside class="notes">Reservefolie. Falls gefragt wird, wie der Fragebogen entstand: geschlossene, gut auswertbare Items waren der Schlüssel, damit die Excel-Auswertung gelingt.</aside>
   </section>
 
-  <!-- 19 ANHANG FORMELN -->
+  <!-- 20 ANHANG FORMELN -->
   <section class="slide" data-tag="Anhang · Formeln">
     <div class="wrap">
       <p class="kicker">Anhang · Spickzettel</p>
@@ -681,14 +723,46 @@
           <tr><td>Varianz</td><td class="code">=VAR.S(B2:B11)</td></tr>
           <tr><td>Median</td><td class="code">=MEDIAN(B2:B11)</td></tr>
           <tr><td>Anzahl (gefüllt)</td><td class="code">=ANZAHL(B2:B11)</td></tr>
+          <tr><td>Ausbaustufe: zählen mit <strong>Bedingung</strong></td><td class="code">=ZÄHLENWENN(C2:C29;"Video")</td></tr>
         </table>
       </div>
-      <p class="muted" style="margin-top:14px;font-size:14.5px">Absolute Bezüge mit <span class="mono">$</span> (z. B. <span class="mono">=$B$2</span>) – die wichtigste Hürde beim Kopieren von Formeln.</p>
+      <p class="muted" style="margin-top:14px;font-size:14.5px">Absolute Bezüge mit <span class="mono">$</span> (z. B. <span class="mono">=$B$2</span>) – die wichtigste Hürde beim Kopieren von Formeln. Bedingte Funktionen (<span class="mono">ZÄHLENWENN</span>, <span class="mono">WENN</span>) öffnen die Tür zur Algorithmik. <span class="mono">STABW.S</span> teilt durch n−1 (Klasse als <strong>Stichprobe</strong>); die Variante <span class="mono">=STABW.N(…)</span> durch n (Klasse als <strong>Grundgesamtheit</strong>) – eine bewusste Modellierungsentscheidung.</p>
     </div>
     <aside class="notes">Reservefolie / Spickzettel. Praktisch für Detailfragen zu konkreten Funktionen.</aside>
   </section>
 
-  <!-- 20 ANHANG PHASENPLAN -->
+  <!-- 21 ANHANG ALGORITHMIK-BRÜCKE -->
+  <section class="slide" data-tag="Anhang · Algorithmik">
+    <div class="wrap">
+      <p class="kicker">Anhang · Brücke zum Lernfeld „Algorithmisches Problemlösen“</p>
+      <h2>Dieselbe Auswertung – als Programm</h2>
+      <div class="rule"></div>
+      <div class="split" style="align-items:start">
+        <div>
+          <table style="font-size:14px">
+            <tr><th>In Excel</th><th>In Python (pandas)</th></tr>
+            <tr><td class="code">=MITTELWERT(B2:B29)</td><td class="code">df["Minuten"].mean()</td></tr>
+            <tr><td class="code">=MAX(…)-MIN(…)</td><td class="code">….max() - ….min()</td></tr>
+            <tr><td class="code">=ZÄHLENWENN(C:C;"Video")</td><td class="code">(df["Kategorie"]=="Video").sum()</td></tr>
+            <tr><td>Diagramm per Klick</td><td class="code">….plot.bar()</td></tr>
+          </table>
+          <p class="muted" style="font-size:14.5px;margin-top:12px">Tabellenkalkulation ist <strong>ein Denkmodell unter mehreren</strong> – die Konzepte (Variable, Rechenvorschrift, Bedingung) tragen bis in die Programmierung.</p>
+        </div>
+        <div>
+          <pre class="codeblock"><span class="cm"># gleiche Kennwerte, gleiches Diagramm:</span>
+import pandas as pd
+df = pd.read_csv("umfrage.csv")
+print(df["Minuten"].mean())
+print(df["Minuten"].max() - df["Minuten"].min())
+df.groupby("Kategorie")["Minuten"].mean().plot.bar()</pre>
+          <p class="muted" style="font-size:14.5px;margin-top:12px"><strong>Fünf Zeilen Python</strong> – und werkzeugneutral gedacht: Die Reihe läuft genauso mit dem freien <strong>LibreOffice Calc</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Reservefolie für die Rückfrage „Wo bleibt die Algorithmik?“: Die Reihe selbst bleibt bewusst im Lernfeld „Daten und ihre Spuren“ – aber sie ist <strong>anschlussfähig</strong>. Fachlicher Kontrast: Tabellenblatt = <strong>deklarativ</strong> (Beziehungen beschreiben, die Engine bestimmt die Reihenfolge), Python-Skript = <strong>imperativ</strong> (Schritte in fester Folge) – zwei Paradigmen, ein Problem. Option für den nächsten Durchgang: diese Gegenüberstellung als 10-Minuten-Ausblick in der letzten Stunde (siehe Reflexion). Gleichzeitig das Argument zur Werkzeugfrage: Konzepte statt Produkt – Excel, Calc oder Python sind austauschbare Träger derselben Ideen.</aside>
+  </section>
+
+  <!-- 22 ANHANG PHASENPLAN -->
   <section class="slide" data-tag="Anhang · Stundenplan">
     <div class="wrap">
       <p class="kicker">Anhang · Verlaufsübersicht</p>
