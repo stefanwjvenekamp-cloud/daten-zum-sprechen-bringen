@@ -272,7 +272,7 @@
           <p>Bewusst <strong>nicht</strong> Gegenstand dieser Einheit – das Lernfeld erhält im schuleigenen Arbeitsplan eigene Unterrichtsreihen.</p>
         </div>
       </div>
-      <p class="step" style="margin-top:16px"><span class="tagline good">KC-Leitplanke</span> &nbsp;„Ein <strong>breiter Überblick</strong> […] ist wichtiger als eine Spezialisierung in einzelnen Modulen“ (KC, S. 15) – das gilt für den <strong>Arbeitsplan des Schuljahres</strong>, nicht für jede einzelne Reihe: Diese Reihe vertieft bewusst <strong>ein</strong> Lernfeld und bleibt dabei ein Baustein unter mehreren.</p>
+      <p class="step" style="margin-top:16px"><span class="tagline good">KC-Leitplanke</span> &nbsp;„Bei der Zusammenstellung des schuleigenen Arbeitsplans ist ein <strong>breiter Überblick</strong> […] wichtiger als eine Spezialisierung in einzelnen Modulen“ (KC, S. 15) – Maßstab ist also das <strong>Schuljahr</strong>, nicht die einzelne Reihe: Diese vertieft bewusst <strong>ein</strong> Lernfeld und bleibt ein Baustein unter mehreren.</p>
     </div>
     <aside class="notes">Pflichtaspekt 8 – als ehrliche Landkarte über alle <strong>vier Lernfelder</strong>. Kernbotschaft: Die Reihe sitzt voll im Lernfeld „Daten und ihre Spuren“ (Modul „Verwaltung von Daten“) und nimmt den Datenschutz gleich mit. Auf die Rückfrage „nur eines von vier Lernfeldern?“: Ja, bewusst – das KC verlangt die Auswahl im <strong>schuleigenen Arbeitsplan</strong>; seit Informatik Pflichtfach ist (Jg. 10 ab 2023/24, eine Wochenstunde), zählt der breite Überblick übers Schuljahr, nicht innerhalb jeder einzelnen Reihe. Kompetenz-Codes im Detail: Anhang.</aside>
   </section>
@@ -418,7 +418,7 @@
         <div class="rule"></div>
         <ul class="bul">
           <li class="step"><strong>Leere Zellen</strong> (nicht ausgefüllte Fragen) – wie zählen?</li>
-          <li class="step"><strong>Komma vs. Punkt</strong>: <span class="mono">1,5</span> ≠ <span class="mono">1.5</span> → Text statt Zahl</li>
+          <li class="step"><strong>Komma vs. Punkt</strong>: aus <span class="mono">1.5</span> macht Excel ein <strong>Datum</strong> („01. Mai“) oder Text – nie die Zahl <span class="mono">1,5</span></li>
           <li class="step"><strong>Uneinheitliche Eingaben</strong>: „2h“, „120“, „zwei Stunden“</li>
           <li class="step"><strong>Ausreißer</strong> prüfen: Tippfehler oder echter Wert?</li>
         </ul>
@@ -433,7 +433,7 @@
         </ul>
       </div>
     </div>
-    <aside class="notes">Phase 4 – die Phase, die man im Plan immer zu kurz ansetzt (siehe später „Was ich ändern würde“). Wichtiger Lernmoment: Datenqualität entscheidet über die Aussagekraft. Knüpft direkt an die Stolperstein-Folie an. Diagnose-Trick: <span class="mono">=ANZAHL2(…)-ANZAHL(…)</span> zählt genau die Einträge, die keine Zahlen sind (z. B. „2h“).</aside>
+    <aside class="notes">Phase 4 – die Phase, die man im Plan immer zu kurz ansetzt (siehe später „Was ich ändern würde“). Wichtiger Lernmoment: Datenqualität entscheidet über die Aussagekraft. Knüpft direkt an die Stolperstein-Folie an. Diagnose-Trick: <span class="mono">=ANZAHL2(…)-ANZAHL(…)</span> zählt genau die Einträge, die keine Zahlen sind (z. B. „2h“). Achtung: aus Punkt-Eingaben entstandene <strong>Datumswerte</strong> zählen als Zahlen – die fallen erst als absurde Ausreißer beim Plausibilisieren auf.</aside>
   </section>
 
   <!-- 11 VISUALISIERUNG -->
@@ -563,7 +563,7 @@
         <tr><th style="width:23%">Problem</th><th style="width:34%">Was passiert</th><th>Gegenmaßnahme</th></tr>
         <tr><td><strong>Fragebogen- &amp; Item-Design</strong></td><td>Items unklar oder ohne Skala → nicht auswertbar; Items auf der Rückseite übersehen</td><td>Items vorab im Probedurchlauf testen, feste Antwortskala (z. B. 1–4), klares Layout &amp; Nummerierung, Rückseite kennzeichnen</td></tr>
         <tr><td><strong>Datenorganisation</strong></td><td>uneinheitlich/unstrukturiert erfasst → Auswertung umständlich oder falsch</td><td>feste Tabellenstruktur, Codiervorgaben, gemeinsame Eingaberegeln</td></tr>
-        <tr><td><strong>Zellbezüge &amp; Datendeutung</strong></td><td>Formeln „verrutschen“ (relativ statt absolut), Werte falsch gedeutet → falsche Ergebnisse</td><td>früh <span class="mono">$</span>-Bezüge zeigen, „Formeln anzeigen“ (<span class="mono">Strg+#</span>), Stichprobenkontrolle, Ergebnisse plausibilisieren</td></tr>
+        <tr><td><strong>Zellbezüge &amp; Datendeutung</strong></td><td>Formeln „verrutschen“ (relativ statt absolut), Werte falsch gedeutet → falsche Ergebnisse</td><td>früh <span class="mono">$</span>-Bezüge zeigen, Formelansicht (<span class="mono">Formeln → Formeln anzeigen</span>), Stichprobenkontrolle, Ergebnisse plausibilisieren</td></tr>
         <tr><td><strong>Diagramme deuten</strong></td><td>Diagramm wird erstellt, aber nicht verstanden – auch das eigene nicht</td><td>Kernaussage in einem Satz formulieren, gezielte Lesefragen, Peer-Erklärung</td></tr>
       </table>
     </div>
@@ -639,7 +639,7 @@
           <h3 style="font-size:18px">Ideensammlung für die Gruppe</h3>
           <ul class="bul" style="gap:9px">
             <li>Arbeitsblatt <strong>Excel-Grundlagen</strong></li>
-            <li><strong>Fragebogen-Vorlage</strong> „Mediennutzung“</li>
+            <li>Arbeitsblatt &amp; <strong>Fragebogen-Vorlage</strong> „Mediennutzung“</li>
             <li>Anleitung <strong>Auswertung &amp; Visualisierung</strong></li>
             <li><strong>Bewertungsraster</strong></li>
           </ul>
@@ -666,10 +666,10 @@
       <table style="font-size:14.5px">
         <tr><th>Stufe</th><th>Die Schülerinnen und Schüler …</th><th>Kompetenzen</th></tr>
         <tr><td><strong>Basis</strong></td><td>nennen Kriterien zur Strukturierung; erstellen Tabellen mit einer Tabellenkalkulation; gewinnen Informationen (Filtern/Sortieren); stellen Daten als Diagramme dar</td><td class="mono">P1.3 P3.2 P4.2 P5.1 I1.3</td></tr>
-        <tr><td><strong>Vertiefung</strong></td><td>unterscheiden Datensatz, Attribut, Schlüsselattribut, Tabelle; formulieren einfache Suchanfragen</td><td class="mono">P2.2 P3.1 P4.1 I1.3</td></tr>
+        <tr><td><strong>Vertiefung</strong></td><td>unterscheiden Datensatz, Attribut, Schlüsselattribut, Tabelle, Datenbank; formulieren einfache Suchanfragen</td><td class="mono">P2.2 P3.1 P4.1 I1.3</td></tr>
         <tr><td><strong>Ergänzung</strong></td><td>nutzen Aggregatfunktionen; erläutern Chancen/Risiken automatisierter Datenanalyse</td><td class="mono">P2.2 P4.4 I1.3 I4.1</td></tr>
       </table>
-      <p class="muted" style="margin-top:14px;font-size:14.5px">Schwerpunkt der Reihe liegt auf <strong>Basis</strong> (Tabellen, Kennwerte, Diagramme); Mittelwert/Standardabweichung gehen punktuell in die Vertiefung.</p>
+      <p class="muted" style="margin-top:14px;font-size:14.5px">Schwerpunkt der Reihe liegt auf <strong>Basis</strong> (Tabellen, Kennwerte, Diagramme); die statistischen Kennwerte zielen auf die <strong>Ergänzung</strong> (Aggregatfunktionen).</p>
     </div>
     <aside class="notes">Reservefolie. Nur bei Nachfrage zeigen. Zeigt, dass die Reihe bewusst auf der Basis-Stufe aufsetzt und in Richtung Vertiefung öffnet.</aside>
   </section>

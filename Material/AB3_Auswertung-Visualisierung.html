@@ -55,12 +55,13 @@ th{background:var(--accent-soft);color:var(--accent-ink)}
         <tr><td>1</td><td>120</td><td>Soziale Medien</td></tr>
         <tr><td>2</td><td>95</td><td>Video</td></tr>
       </table>
+      <div class="box tip"><b>Codier-Regel:</b> Kategorien beim Eintippen <strong>einheitlich</strong> schreiben (immer genau „Video“, nicht mal „Videos“, mal „Streaming“) – sonst werden sie beim Zählen nicht zusammengefasst.</div>
     </div></div>
 
     <div class="step"><div class="no">2</div><div class="c">
       <h3>Daten bereinigen</h3>
       <ul>
-        <li><strong>Komma statt Punkt</strong> verwenden (<span class="mono">1,5</span>) – sonst erkennt Excel Text statt Zahl.</li>
+        <li><strong>Komma statt Punkt</strong> verwenden (<span class="mono">1,5</span>) – aus <span class="mono">1.5</span> macht Excel sonst ein <strong>Datum</strong> („01. Mai“!) oder Text, beides verfälscht die Berechnung.</li>
         <li><strong>Leere Zellen</strong>: bewusst entscheiden (leer lassen, nicht „0“ eintragen, wenn keine Angabe).</li>
         <li><strong>Einheit vereinheitlichen</strong> (alles in Minuten).</li>
         <li><strong>Ausreißer</strong> prüfen: ist „1200“ ein Tippfehler?</li>
@@ -70,7 +71,7 @@ th{background:var(--accent-soft);color:var(--accent-ink)}
 
     <div class="step"><div class="no">3</div><div class="c">
       <h3>Kennwerte berechnen</h3>
-      <p>Schreibe die Formeln in freie Zellen unter den Daten (Bereich anpassen, z. B. <span class="mono">B2:B29</span>):</p>
+      <p>Schreibt die Formeln in freie Zellen unter den Daten (Bereich anpassen, z. B. <span class="mono">B2:B29</span>):</p>
       <table>
         <tr><th>Kennwert</th><th>Formel</th></tr>
         <tr><td>Mittelwert</td><td class="mono">=MITTELWERT(B2:B29)</td></tr>
